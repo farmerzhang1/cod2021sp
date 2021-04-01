@@ -1,2 +1,14 @@
 [0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /home/farmerzhang1/program/cod2021sp/lab1-ALU/target/scala-2.12/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALU$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALU.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALU$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALU.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALUDriver.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALU.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALUDriver$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALUDriver$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ALU$$anon$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /home/farmerzhang1/program/cod2021sp/lab1-ALU/target/scala-2.12/classes.bak[0m

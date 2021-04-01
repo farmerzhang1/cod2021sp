@@ -1,0 +1,13 @@
+[0m[[0m[31merror[0m] [0m[0m/home/farmerzhang1/program/cod2021sp/lab1-ALU/src/test/scala/ALU/ALUtest.scala:10:17: value input is not a member of ALU.ALU[0m
+[0m[[0m[31merror[0m] [0m[0m            dut.input.initSource()[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/farmerzhang1/program/cod2021sp/lab1-ALU/src/test/scala/ALU/ALUtest.scala:11:17: value input is not a member of ALU.ALU[0m
+[0m[[0m[31merror[0m] [0m[0m            dut.input.setSourceClock(dut.clock)[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/farmerzhang1/program/cod2021sp/lab1-ALU/src/test/scala/ALU/ALUtest.scala:12:17: value output is not a member of ALU.ALU[0m
+[0m[[0m[31merror[0m] [0m[0m            dut.output.initSink()[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/farmerzhang1/program/cod2021sp/lab1-ALU/src/test/scala/ALU/ALUtest.scala:13:17: value output is not a member of ALU.ALU[0m
+[0m[[0m[31merror[0m] [0m[0m            dut.output.setSinkClock(dut.clock)[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0mfour errors found[0m

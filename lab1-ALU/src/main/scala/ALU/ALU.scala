@@ -32,3 +32,7 @@ class ALU (val w: Int) extends Module {
     ))
     io.z := io.res === 0.U
 }
+
+object ALUDriver extends App {
+  chisel3.Driver.execute(args, () => new ALU(32))
+}
