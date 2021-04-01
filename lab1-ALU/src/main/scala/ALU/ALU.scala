@@ -16,11 +16,11 @@ output z // zero sign
 */
 
 class ALU (val w: Int) extends Module {
-    val io = IO (new {
-        val a = Input (UInt(w.W)), // .W method for width
-        val b = Input (UInt(w.W)),
-        val op = Input (UInt(3.W)),
-        val res = Output (UInt(w.W)),
+    val io = IO (new Bundle{
+        val a = Input (UInt(w.W)) // .W method for width
+        val b = Input (UInt(w.W))
+        val op = Input (UInt(3.W))
+        val res = Output (UInt(w.W))
         val z = Output (Bool())
     })
 }
