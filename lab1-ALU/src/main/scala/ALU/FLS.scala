@@ -8,17 +8,23 @@ output [6:0] f
 */
 import chisel3._
 import chisel3.util._
-
+// we should use finite state machines
+// (enums
 class FLS extends Module {
     val io = IO (new Bundle {
         val en = Input (Bool())
         val in = Input (UInt(7.W))
         val out = Output (UInt(7.W))
     })
+    val S0::SN::Nil = Enum(2)
     val alu = Module(new ALU(7))
-    val d0 = RegInit(io.in)
-    val d1 = RegNext(io.in)
-    val f0 = RegInit // TODO
+    val current_state = WireDefault(S0)
+    switch (current_state) {
+    is (S0) {
+        
+    }
+    }
+
     alu.io.a := prev
     alu.io.b := current
     alu.io.op := 0.U
