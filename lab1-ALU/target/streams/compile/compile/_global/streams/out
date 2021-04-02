@@ -1,7 +1,7 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/farmerzhang1/program/cod2021sp/lab1-ALU/src/main/scala/ALU/ALU.scala:37:18: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.[0m
-[0m[[0m[33mwarn[0m] [0m[0m  chisel3.Driver.execute(args, () => new ALU(32))[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/farmerzhang1/program/cod2021sp/lab1-ALU/src/main/scala/ALU/FLS.scala:34:18: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  chisel3.Driver.execute(args, () => new FLS)[0m
 [0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/farmerzhang1/program/cod2021sp/lab1-ALU/src/main/scala/ALU/ALU.scala:37:11: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage[0m
-[0m[[0m[33mwarn[0m] [0m[0m  chisel3.Driver.execute(args, () => new ALU(32))[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/farmerzhang1/program/cod2021sp/lab1-ALU/src/main/scala/ALU/FLS.scala:34:11: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage[0m
+[0m[[0m[33mwarn[0m] [0m[0m  chisel3.Driver.execute(args, () => new FLS)[0m
 [0m[[0m[33mwarn[0m] [0m[0m          ^[0m
 [0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
