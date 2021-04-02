@@ -16,25 +16,33 @@ class FLS extends Module {
         val in = Input (UInt(7.W))
         val out = Output (UInt(7.W))
     })
-    val S0::SN::Nil = Enum(2)
+    val s0::sn::Nil = Enum(2)
     val alu = Module(new ALU(7))
-    val current_state = WireDefault(S0)
-    switch (current_state) {
-    is (S0) {
-        
-    }
-    }
+    val current_state = RegInit(s0)
+    val d0 = RegInit(io.in)
+    val d1 = RegNext(d0)
+
+    val prev = Reg(UInt(7.W))
+    val current = Reg(UInt(7.W))
 
     alu.io.a := prev
     alu.io.b := current
     alu.io.op := 0.U
-    when (io.en) {
-        io.out := current
-        current := current + prev
-        prev := current - prev
-    } // TODO
-    io.out := current
 
+    switch (current_state) {
+    is (s0) {
+        prev := d0
+        current := d1
+        current_state := sn
+    }
+    is (sn) {
+        when (io.en) {
+            current := alu.io.res
+            prev := current
+        }
+    }
+    }
+    io.out := prev
 }
 
 object FLSDriver extends App {
