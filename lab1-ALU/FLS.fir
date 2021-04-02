@@ -37,7 +37,7 @@ circuit FLS :
     reg current_state : UInt<1>, clock with : (reset => (reset, UInt<1>("h00"))) @[FLS.scala 21:32]
     reg d0 : UInt, clock with : (reset => (reset, io.in)) @[FLS.scala 22:21]
     reg d1 : UInt, clock @[FLS.scala 23:21]
-    d1 <= d0 @[FLS.scala 23:21]
+    d1 <= io.in @[FLS.scala 23:21]
     reg prev : UInt<7>, clock @[FLS.scala 25:19]
     reg current : UInt<7>, clock @[FLS.scala 26:22]
     alu.io.a <= prev @[FLS.scala 28:14]

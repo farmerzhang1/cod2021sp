@@ -46,7 +46,7 @@ module FLS(
     if (reset) begin // @[FLS.scala 22:21]
       d0 <= io_in; // @[FLS.scala 22:21]
     end
-    d1 <= d0; // @[FLS.scala 23:21]
+    d1 <= io_in; // @[FLS.scala 23:21]
     if (_T) begin // @[Conditional.scala 40:58]
       prev <= d0; // @[FLS.scala 34:14]
     end else if (current_state) begin // @[Conditional.scala 39:67]

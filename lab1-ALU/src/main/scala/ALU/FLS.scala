@@ -20,7 +20,7 @@ class FLS extends Module {
     val alu = Module(new ALU(7))
     val current_state = RegInit(s0)
     val d0 = RegInit(io.in)
-    val d1 = RegNext(d0)
+    val d1 = RegNext(io.in)
 
     val prev = Reg(UInt(7.W))
     val current = Reg(UInt(7.W))
