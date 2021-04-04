@@ -1,1 +1,12 @@
 lab1-ALU/target/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+*.fir
+*.anno.json
