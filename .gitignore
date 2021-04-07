@@ -12,5 +12,7 @@ project/plugins/project/
 .lib/
 *.fir
 *.anno.json
-.cache
-.class
+*.cache
+*.class
+*.out
+lab1-vivado/lab1-vivado.cache/
