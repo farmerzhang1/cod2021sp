@@ -36,3 +36,30 @@ class ALU (val w: Int) extends Module {
 // object ALUDriver extends App {
 //   chisel3.Driver.execute(args, () => new ALU(32))
 // }
+
+class ALU_test extends Module {
+    val io = IO (new Bundle {
+        val op = Input (UInt(6.W)) // operands and operator
+        val switch = Input (UInt(2.W))
+        val en = Input (Bool())
+        val res = Output (UInt(6.W))
+        val z = Output(Bool())
+    })
+    val a = Reg(UInt(6.W))
+    val b = Reg(UInt(6.W))
+    val op = Reg(UInt(3.W))
+    val alu = Module(new ALU(6))
+    alu.io.a := a
+    alu.io.b := b
+    alu.io.op := op
+    io.res := alu.io.res
+    io.z := alu.io.z
+    when (io.en) {
+        when (io.switch === 0.U) { a := io.op }
+        .elsewhen(io.switch === 1.U) { b := io.op }
+        .elsewhen(io.switch === 2.U) { op := io.op(2,0) }
+    }
+}
+object ALUDriver extends App {
+  chisel3.Driver.execute(args, () => new ALU_test)
+}

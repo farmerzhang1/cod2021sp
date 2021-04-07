@@ -16,16 +16,14 @@ class FLS extends Module {
         val in = Input (UInt(7.W))
         val out = Output (UInt(7.W))
     })
-    // 我們還得顯式提供一個reset
+    // 我們還得顯式提供一個reset?
 
-    val s0::s1::s2::s3::Nil = Enum(4)
+    val s0::s1::s2::s3::s4::s5::s6::Nil = Enum(7)
     val alu = Module(new ALU(7))
     val current_state = RegInit(s0)
-    val d0 = Reg(UInt(7.W))
-    val d1 = Reg(UInt(7.W))
 
-    val prev = Reg(UInt(7.W))
-    val current = Reg(UInt(7.W))
+    val prev = RegInit(0.U(7.W))
+    val current = RegInit(0.U(7.W))
 
     alu.io.a := prev
     alu.io.b := current
@@ -43,16 +41,32 @@ class FLS extends Module {
         }
     }
     is (s2) {
-        when (io.en) {
-            current := io.in
-            prev := current
+        when (!io.en) {
             current_state := s3
         }
     }
     is (s3) {
         when (io.en) {
+            current := io.in
+            prev := current
+            current_state := s4
+        }
+    }
+    is (s4) {
+        when (!io.en) {
+            current_state := s5
+        }
+    }
+    is (s5) {
+        when (io.en) {
             current := alu.io.res
             prev := current
+            current_state := s6
+        }
+    }
+    is (s6) {
+        when (!io.en) {
+            current_state := s5
         }
     }
     }

@@ -1,0 +1,390 @@
+$date
+	Wed Apr  7 23:25:09 2021
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	10ps
+$end
+$scope module FLS_tb $end
+$var wire 7 ! out [6:0] $end
+$var reg 1 " clk $end
+$var reg 1 # en $end
+$var reg 7 $ in [6:0] $end
+$var reg 1 % reset $end
+$scope module fls $end
+$var wire 1 & _T_3 $end
+$var wire 7 ' alu_io_a [6:0] $end
+$var wire 7 ( alu_io_b [6:0] $end
+$var wire 1 " clock $end
+$var wire 1 # io_en $end
+$var wire 7 ) io_in [6:0] $end
+$var wire 7 * io_out [6:0] $end
+$var wire 1 % reset $end
+$var wire 7 + alu_io_res [6:0] $end
+$var wire 1 , _T_8 $end
+$var wire 1 - _T_7 $end
+$var wire 1 . _T_5 $end
+$var wire 1 / _T_4 $end
+$var wire 1 0 _T_2 $end
+$var wire 1 1 _T_1 $end
+$var wire 1 2 _T $end
+$var wire 3 3 _GEN_9 [2:0] $end
+$var wire 3 4 _GEN_7 [2:0] $end
+$var wire 7 5 _GEN_6 [6:0] $end
+$var wire 3 6 _GEN_5 [2:0] $end
+$var wire 3 7 _GEN_4 [2:0] $end
+$var wire 7 8 _GEN_3 [6:0] $end
+$var wire 3 9 _GEN_2 [2:0] $end
+$var wire 3 : _GEN_18 [2:0] $end
+$var wire 7 ; _GEN_17 [6:0] $end
+$var wire 7 < _GEN_16 [6:0] $end
+$var wire 7 = _GEN_15 [6:0] $end
+$var wire 7 > _GEN_14 [6:0] $end
+$var wire 3 ? _GEN_13 [2:0] $end
+$var wire 3 @ _GEN_12 [2:0] $end
+$var wire 7 A _GEN_11 [6:0] $end
+$var wire 7 B _GEN_10 [6:0] $end
+$var wire 7 C _GEN_0 [6:0] $end
+$var reg 7 D current [6:0] $end
+$var reg 3 E current_state [2:0] $end
+$var reg 7 F prev [6:0] $end
+$scope module alu $end
+$var wire 7 G io_a [6:0] $end
+$var wire 7 H io_b [6:0] $end
+$var wire 7 I io_res [6:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx I
+bx H
+bx G
+bx F
+bx E
+bx D
+bx C
+bx B
+bx A
+bx @
+bx ?
+bx >
+bx =
+bx <
+bx ;
+bx :
+b11 9
+bx 8
+bx 7
+b101 6
+bx 5
+bx 4
+bx 3
+x2
+x1
+x0
+x/
+x.
+x-
+x,
+bx +
+bx *
+b10 )
+bx (
+bx '
+1&
+1%
+b10 $
+0#
+0"
+bx !
+$end
+#500
+b0 C
+b0 5
+b0 8
+b0 <
+b0 ;
+b0 :
+b0 7
+b0 ?
+b0 >
+b0 =
+b0 B
+b0 A
+b0 @
+b0 4
+b0 3
+b0 +
+b0 I
+b0 (
+b0 H
+b0 !
+b0 *
+b0 D
+b0 '
+b0 G
+b0 F
+12
+01
+00
+0/
+0.
+0-
+0,
+b0 E
+1"
+#600
+b0 6
+b0 9
+0&
+b10 C
+b100 7
+b110 4
+1#
+#1000
+0"
+#1200
+0%
+#1500
+b1 :
+b1 ?
+b1 @
+b1 9
+b1 6
+b1 3
+02
+11
+b1 E
+1"
+#2000
+0"
+#2500
+b101 6
+b11 9
+1&
+b0 C
+b1 7
+b1 4
+1"
+0#
+#3000
+0"
+#3500
+1"
+#4000
+0"
+#4100
+b1 6
+b1 9
+0&
+b10 C
+b100 7
+b110 4
+1#
+#4500
+b10 :
+b10 <
+b10 ?
+b10 >
+b10 @
+b10 8
+b10 B
+b10 5
+b10 9
+b10 6
+b10 3
+b10 +
+b10 I
+b10 (
+b10 H
+b10 !
+b10 *
+b10 D
+01
+10
+b10 E
+1"
+#4900
+b101 6
+b11 9
+1&
+b0 8
+b10 7
+b10 4
+0#
+#5000
+0"
+#5500
+b11 ?
+b11 @
+b11 :
+b11 7
+b11 4
+b11 3
+00
+1/
+b11 E
+1"
+#5700
+b11 $
+b11 )
+#6000
+0"
+#6500
+1"
+#7000
+0"
+#7100
+b11 6
+b11 <
+b10 ;
+b100 :
+0&
+b11 C
+b10 8
+b100 7
+b110 4
+1#
+#7500
+b100 @
+b11 8
+b11 B
+b10 A
+b101 5
+b100 9
+b100 ?
+b11 >
+b10 =
+b100 6
+b100 3
+b11 (
+b11 H
+b11 !
+b11 *
+b11 D
+b101 +
+b101 I
+b10 '
+b10 G
+b10 F
+0/
+1.
+b100 E
+1"
+#8000
+0"
+#8500
+1"
+#9000
+0"
+#9500
+1"
+#10000
+b100 C
+0"
+b100 $
+b100 )
+#10500
+1"
+#10600
+b101 :
+b101 ?
+b101 6
+b11 9
+1&
+b11 C
+b10 8
+b11 5
+b100 4
+0#
+#11000
+0"
+#11500
+b101 7
+b101 @
+b101 4
+b101 3
+0.
+1-
+b101 E
+1"
+#12000
+b11 ;
+b101 <
+b110 :
+b11 =
+b101 >
+b110 ?
+b101 9
+b11 A
+b101 B
+b110 @
+0&
+b100 C
+b11 8
+b100 7
+b101 5
+b110 4
+0"
+1#
+#12300
+b101 C
+b101 $
+b101 )
+#12500
+b110 :
+b110 3
+b110 ?
+b101 8
+b1000 5
+b110 9
+b110 6
+b110 @
+b101 (
+b101 H
+b101 !
+b101 *
+b101 D
+b1000 +
+b1000 I
+b11 '
+b11 G
+b11 F
+0-
+1,
+b110 E
+1"
+#13000
+0"
+#13500
+1"
+#14000
+0"
+#14500
+1"
+#15000
+0"
+#15500
+1"
+#16000
+0"
+#16500
+1"
+#17000
+0"
+#17500
+1"
+#18000
+0"
+#18500
+1"
+#19000
+0"
+#19500
+1"
+#20000
+0"
