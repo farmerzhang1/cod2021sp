@@ -16,11 +16,13 @@ class FLS extends Module {
         val in = Input (UInt(7.W))
         val out = Output (UInt(7.W))
     })
-    val s0::sn::Nil = Enum(2)
+    // 我們還得顯式提供一個reset
+
+    val s0::s1::s2::s3::Nil = Enum(4)
     val alu = Module(new ALU(7))
     val current_state = RegInit(s0)
-    val d0 = RegInit(io.in)
-    val d1 = RegNext(io.in)
+    val d0 = Reg(UInt(7.W))
+    val d1 = Reg(UInt(7.W))
 
     val prev = Reg(UInt(7.W))
     val current = Reg(UInt(7.W))
@@ -31,18 +33,30 @@ class FLS extends Module {
 
     switch (current_state) {
     is (s0) {
-        prev := d0
-        current := d1
-        current_state := sn
+        current := 0.U
+        current_state := s1
     }
-    is (sn) {
+    is (s1) {
+        when (io.en) {
+            current := io.in
+            current_state := s2
+        }
+    }
+    is (s2) {
+        when (io.en) {
+            current := io.in
+            prev := current
+            current_state := s3
+        }
+    }
+    is (s3) {
         when (io.en) {
             current := alu.io.res
             prev := current
         }
     }
     }
-    io.out := prev
+    io.out := current
 }
 
 object FLSDriver extends App {

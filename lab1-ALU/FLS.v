@@ -16,50 +16,58 @@ module FLS(
   reg [31:0] _RAND_0;
   reg [31:0] _RAND_1;
   reg [31:0] _RAND_2;
-  reg [31:0] _RAND_3;
-  reg [31:0] _RAND_4;
 `endif // RANDOMIZE_REG_INIT
-  wire [6:0] alu_io_a; // @[FLS.scala 20:21]
-  wire [6:0] alu_io_b; // @[FLS.scala 20:21]
-  wire [6:0] alu_io_res; // @[FLS.scala 20:21]
-  reg  current_state; // @[FLS.scala 21:32]
-  reg [6:0] d0; // @[FLS.scala 22:21]
-  reg [6:0] d1; // @[FLS.scala 23:21]
-  reg [6:0] prev; // @[FLS.scala 25:19]
-  reg [6:0] current; // @[FLS.scala 26:22]
-  wire  _T = ~current_state; // @[Conditional.scala 37:30]
-  wire  _GEN_6 = _T | current_state; // @[Conditional.scala 40:58 FLS.scala 36:23 FLS.scala 21:32]
-  ALU alu ( // @[FLS.scala 20:21]
+  wire [6:0] alu_io_a; // @[FLS.scala 22:21]
+  wire [6:0] alu_io_b; // @[FLS.scala 22:21]
+  wire [6:0] alu_io_res; // @[FLS.scala 22:21]
+  reg [1:0] current_state; // @[FLS.scala 23:32]
+  reg [6:0] prev; // @[FLS.scala 27:19]
+  reg [6:0] current; // @[FLS.scala 28:22]
+  wire  _T = 2'h0 == current_state; // @[Conditional.scala 37:30]
+  wire  _T_1 = 2'h1 == current_state; // @[Conditional.scala 37:30]
+  wire [6:0] _GEN_0 = io_en ? io_in : current; // @[FLS.scala 40:22 FLS.scala 41:21 FLS.scala 28:22]
+  wire  _T_2 = 2'h2 == current_state; // @[Conditional.scala 37:30]
+  wire [6:0] _GEN_2 = io_en ? current : prev; // @[FLS.scala 46:22 FLS.scala 48:18 FLS.scala 27:19]
+  wire [1:0] _GEN_3 = io_en ? 2'h3 : current_state; // @[FLS.scala 46:22 FLS.scala 49:27 FLS.scala 23:32]
+  wire  _T_3 = 2'h3 == current_state; // @[Conditional.scala 37:30]
+  wire [6:0] _GEN_4 = io_en ? alu_io_res : current; // @[FLS.scala 53:22 FLS.scala 54:21 FLS.scala 28:22]
+  ALU alu ( // @[FLS.scala 22:21]
     .io_a(alu_io_a),
     .io_b(alu_io_b),
     .io_res(alu_io_res)
   );
-  assign io_out = prev; // @[FLS.scala 45:12]
-  assign alu_io_a = prev; // @[FLS.scala 28:14]
-  assign alu_io_b = current; // @[FLS.scala 29:14]
+  assign io_out = current; // @[FLS.scala 59:12]
+  assign alu_io_a = prev; // @[FLS.scala 30:14]
+  assign alu_io_b = current; // @[FLS.scala 31:14]
   always @(posedge clock) begin
-    if (reset) begin // @[FLS.scala 21:32]
-      current_state <= 1'h0; // @[FLS.scala 21:32]
-    end else begin
-      current_state <= _GEN_6;
+    if (reset) begin // @[FLS.scala 23:32]
+      current_state <= 2'h0; // @[FLS.scala 23:32]
+    end else if (_T) begin // @[Conditional.scala 40:58]
+      current_state <= 2'h1; // @[FLS.scala 37:23]
+    end else if (_T_1) begin // @[Conditional.scala 39:67]
+      if (io_en) begin // @[FLS.scala 40:22]
+        current_state <= 2'h2; // @[FLS.scala 42:27]
+      end
+    end else if (_T_2) begin // @[Conditional.scala 39:67]
+      current_state <= _GEN_3;
     end
-    if (reset) begin // @[FLS.scala 22:21]
-      d0 <= io_in; // @[FLS.scala 22:21]
-    end
-    d1 <= io_in; // @[FLS.scala 23:21]
-    if (_T) begin // @[Conditional.scala 40:58]
-      prev <= d0; // @[FLS.scala 34:14]
-    end else if (current_state) begin // @[Conditional.scala 39:67]
-      if (io_en) begin // @[FLS.scala 39:22]
-        prev <= current; // @[FLS.scala 41:18]
+    if (!(_T)) begin // @[Conditional.scala 40:58]
+      if (!(_T_1)) begin // @[Conditional.scala 39:67]
+        if (_T_2) begin // @[Conditional.scala 39:67]
+          prev <= _GEN_2;
+        end else if (_T_3) begin // @[Conditional.scala 39:67]
+          prev <= _GEN_2;
+        end
       end
     end
     if (_T) begin // @[Conditional.scala 40:58]
-      current <= d1; // @[FLS.scala 35:17]
-    end else if (current_state) begin // @[Conditional.scala 39:67]
-      if (io_en) begin // @[FLS.scala 39:22]
-        current <= alu_io_res; // @[FLS.scala 40:21]
-      end
+      current <= 7'h0; // @[FLS.scala 36:17]
+    end else if (_T_1) begin // @[Conditional.scala 39:67]
+      current <= _GEN_0;
+    end else if (_T_2) begin // @[Conditional.scala 39:67]
+      current <= _GEN_0;
+    end else if (_T_3) begin // @[Conditional.scala 39:67]
+      current <= _GEN_4;
     end
   end
 // Register and memory initialization
@@ -99,15 +107,11 @@ initial begin
     `endif
 `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
-  current_state = _RAND_0[0:0];
+  current_state = _RAND_0[1:0];
   _RAND_1 = {1{`RANDOM}};
-  d0 = _RAND_1[6:0];
+  prev = _RAND_1[6:0];
   _RAND_2 = {1{`RANDOM}};
-  d1 = _RAND_2[6:0];
-  _RAND_3 = {1{`RANDOM}};
-  prev = _RAND_3[6:0];
-  _RAND_4 = {1{`RANDOM}};
-  current = _RAND_4[6:0];
+  current = _RAND_2[6:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
