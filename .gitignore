@@ -1,6 +1,3 @@
-lab1-ALU/target/
-lab1-ALU/.bsp/
-lab1-ALU/test_run_dir
 dist/*
 target/
 lib_managed/
