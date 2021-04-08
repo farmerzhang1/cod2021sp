@@ -1,0 +1,17 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Thu Apr  8 15:08:22 2021
+# Process ID: 3748
+# Current directory: D:/USTC/cod2021sp/lab1/alu_vivado
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent10732 D:\USTC\cod2021sp\lab1\alu_vivado\alu.xpr
+# Log file: D:/USTC/cod2021sp/lab1/alu_vivado/vivado.log
+# Journal file: D:/USTC/cod2021sp/lab1/alu_vivado\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/USTC/cod2021sp/lab1/alu_vivado/alu.xpr
+update_compile_order -fileset sources_1
+reset_run impl_1 -prev_step 
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
