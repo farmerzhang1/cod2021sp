@@ -72,7 +72,3 @@ class FLS extends Module {
     }
     io.out := current
 }
-
-object FLSDriver extends App {
-  chisel3.Driver.execute(args, () => new FLS)
-}

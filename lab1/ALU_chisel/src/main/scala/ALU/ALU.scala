@@ -33,9 +33,6 @@ class ALU (val w: Int) extends Module {
     io.z := io.res === 0.U
 }
 
-// object ALUDriver extends App {
-//   chisel3.Driver.execute(args, () => new ALU(32))
-// }
 
 class ALU_test extends Module {
     val io = IO (new Bundle {
@@ -59,7 +56,4 @@ class ALU_test extends Module {
         .elsewhen(io.switch === 1.U) { b := io.op }
         .elsewhen(io.switch === 2.U) { op := io.op(2,0) }
     }
-}
-object ALUDriver extends App {
-  chisel3.Driver.execute(args, () => new ALU_test)
 }
