@@ -12,6 +12,7 @@ import chisel3.util._
 // (enums
 class FLS extends Module {
     val io = IO (new Bundle {
+        val reset = Input(Bool()) // hey!! you are not quite right!
         val en = Input (Bool())
         val in = Input (UInt(7.W))
         val out = Output (UInt(7.W))
@@ -20,10 +21,10 @@ class FLS extends Module {
 
     val s0::s1::s2::s3::s4::s5::s6::Nil = Enum(7)
     val alu = Module(new ALU(7))
-    val current_state = RegInit(s0)
+    val current_state = withReset(reset)(RegInit(s0))
 
-    val prev = RegInit(0.U(7.W))
-    val current = RegInit(0.U(7.W))
+    val prev = withReset(reset)(RegInit(0.U(7.W)))
+    val current = withReset(reset)(RegInit(0.U(7.W)))
 
     alu.io.a := prev
     alu.io.b := current
@@ -31,8 +32,12 @@ class FLS extends Module {
 
     switch (current_state) {
     is (s0) {
-        current := 0.U
-        current_state := s1
+        when (!io.reset) {
+            when (io.en) {
+                current := io.in
+                current_state := s2
+            }.otherwise { current_state := s1 }
+        }
     }
     is (s1) {
         when (io.en) {
