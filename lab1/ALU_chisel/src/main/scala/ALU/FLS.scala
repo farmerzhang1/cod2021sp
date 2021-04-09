@@ -17,7 +17,6 @@ class FLS extends Module {
         val in = Input (UInt(7.W))
         val out = Output (UInt(7.W))
     })
-    // 我們還得顯式提供一個reset?
 
     val s0::s1::s2::s3::s4::s5::s6::Nil = Enum(7)
     val alu = Module(new ALU(7))
