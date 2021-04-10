@@ -21,7 +21,7 @@ class RegFile (val n : Int) (val w : Int) extends Module {
         val read_data2 = Output(UInt(w.W))
     })
     // val regf = Wire(Vec(2^n, UInt(w.W)))
-    val regf = RegInit(VecInit(Seq.fill(scala.math.pow(2,3).toInt)(0.U(w.W)))) // init a vector of register with 2^n zeros of width w 
+    val regf = RegInit(VecInit(Seq.fill(scala.math.pow(2,n).toInt)(0.U(w.W)))) // init a vector of register with 2^n zeros of width w 
     when(io.write_en) {
         regf(io.write_addr) := io.write_data
     }
