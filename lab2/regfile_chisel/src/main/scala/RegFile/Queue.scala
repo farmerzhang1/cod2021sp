@@ -13,23 +13,23 @@ import chisel3.experimental._
 class Queue extends Module {
     val io = IO (new Bundle {
         val deq = Input(Bool())
-        val enq = Input(Bool())
+        val enq = Input(Bool()) // deq and enq are mutually exclusive -- !(enq && deq)
         val in = Input(UInt(4.W))
-        val out = Output(UInt(4.W))
+        val out = Output(UInt(4.W)) // deque element
         val full = Output(Bool())
         val empty = Output(Bool())
         val an = Output(UInt(3.W)) // we have 2^3 displays
         val seg = Output(UInt(4.W))
     })
-    val an_reg = Reg(UInt(3.W))
+    val an_reg = Reg(UInt(3.W)) // because chisel can't have regs at its interface like verilog, so, a workaround
     val seg_reg = Reg(UInt(4.W))
-    val enq_pulse = Wire(Bool())
+    val enq_pulse = Wire(Bool()) // one-cycle pulse
     val deq_pulse = Wire(Bool())
-    val hexplay_count = Reg(UInt(32.W))
+    val hexplay_count = Reg(UInt(32.W)) // utility for generating lower frequency clock (?
     val head = RegInit(0.U(3.W))
     val tail = RegInit(0.U(3.W)) // head and tail are initially 0
     val regf = Module(new RegFile(3)(4)) // regfile of size 8*3
-    val valids = RegInit(VecInit(Seq.fill(8)(false.B)))
+    val valids = RegInit(VecInit(Seq.fill(8)(false.B))) // a vector of validity of queue elements, initially false
     io.an := an_reg
     io.seg := seg_reg
     enq_pulse := RegNext(RegNext(io.enq)) && !io.enq //两级同步？
@@ -41,7 +41,7 @@ class Queue extends Module {
     regf.io.write_data := io.in
     when (enq_pulse) {
         valids(tail) := true.B
-        tail := tail+1.U
+        tail := tail+1.U // when tail gets 7, it adds to 0, so the queue is circular queue!
     }
     when (deq_pulse) {
         valids(head) := false.B
@@ -52,5 +52,5 @@ class Queue extends Module {
 
     hexplay_count := Mux(hexplay_count >= (2000000/8).U, 0.U, hexplay_count + 1.U)
     an_reg := Mux(hexplay_count === 0.U, an_reg + 1.U, an_reg)
-    seg_reg := regf.io.read_data2
+    seg_reg := Mux(valids(an_reg), regf.io.read_data2, 0.U) // if invalid, zero (so don't input zero!)
 }

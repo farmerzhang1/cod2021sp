@@ -238,6 +238,13 @@ module Queue(
   wire [2:0] _head_T_1 = head + 3'h1; // @[Queue.scala 48:21]
   wire [31:0] _hexplay_count_T_2 = hexplay_count + 32'h1; // @[Queue.scala 53:77]
   wire [2:0] _an_reg_T_2 = an_reg + 3'h1; // @[Queue.scala 54:49]
+  wire  _GEN_35 = 3'h1 == an_reg ? valids_1 : valids_0; // @[Queue.scala 55:19 Queue.scala 55:19]
+  wire  _GEN_36 = 3'h2 == an_reg ? valids_2 : _GEN_35; // @[Queue.scala 55:19 Queue.scala 55:19]
+  wire  _GEN_37 = 3'h3 == an_reg ? valids_3 : _GEN_36; // @[Queue.scala 55:19 Queue.scala 55:19]
+  wire  _GEN_38 = 3'h4 == an_reg ? valids_4 : _GEN_37; // @[Queue.scala 55:19 Queue.scala 55:19]
+  wire  _GEN_39 = 3'h5 == an_reg ? valids_5 : _GEN_38; // @[Queue.scala 55:19 Queue.scala 55:19]
+  wire  _GEN_40 = 3'h6 == an_reg ? valids_6 : _GEN_39; // @[Queue.scala 55:19 Queue.scala 55:19]
+  wire  _GEN_41 = 3'h7 == an_reg ? valids_7 : _GEN_40; // @[Queue.scala 55:19 Queue.scala 55:19]
   RegFile regf ( // @[Queue.scala 31:22]
     .clock(regf_clock),
     .reset(regf_reset),
@@ -266,7 +273,11 @@ module Queue(
     if (hexplay_count == 32'h0) begin // @[Queue.scala 54:18]
       an_reg <= _an_reg_T_2;
     end
-    seg_reg <= regf_io_read_data2; // @[Queue.scala 55:13]
+    if (_GEN_41) begin // @[Queue.scala 55:19]
+      seg_reg <= regf_io_read_data2;
+    end else begin
+      seg_reg <= 4'h0;
+    end
     if (hexplay_count >= 32'h3d090) begin // @[Queue.scala 53:25]
       hexplay_count <= 32'h0;
     end else begin
