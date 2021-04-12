@@ -3,7 +3,6 @@ package RegFile
 import chisel3._
 import chisel3.util._
 import chisel3.experimental._
-import scala.math._
 
 // clk：时钟
 // ra0, rd0：异步读端⼝0

@@ -10,3 +10,11 @@ object RegFileDriver extends App {
         TargetDirAnnotation("verilog"))
     )
 }
+
+object QueueDriver extends App {
+    (new chisel3.stage.ChiselStage).execute(
+        Array("-X", "verilog", "--full-stacktrace"),
+        Seq(ChiselGeneratorAnnotation(() => new Queue),
+        TargetDirAnnotation("verilog"))
+    )
+}
