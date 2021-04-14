@@ -23,6 +23,8 @@ class Queue extends Module {
     })
     val an_reg = Reg(UInt(3.W)) // because chisel can't have regs at its interface like verilog, so, a workaround
     val seg_reg = Reg(UInt(4.W))
+    val enq_delay2 = RegNext(RegNext(io.enq))
+    val deq_delay2 = RegNext(RegNext(io.deq))
     val enq_pulse = Wire(Bool()) // one-cycle pulse
     val deq_pulse = Wire(Bool())
     val hexplay_count = Reg(UInt(32.W)) // utility for generating lower frequency clock (?
@@ -32,8 +34,8 @@ class Queue extends Module {
     val valids = RegInit(VecInit(Seq.fill(8)(false.B))) // a vector of validity of queue elements, initially false
     io.an := an_reg
     io.seg := seg_reg
-    enq_pulse := RegNext(RegNext(io.enq)) && !io.enq //两级同步？
-    deq_pulse := RegNext(RegNext(io.deq)) && !io.deq
+    enq_pulse := enq_delay2 && !RegNext(enq_delay2) // please refer to page 25, lab2
+    deq_pulse := deq_delay2 && !RegNext(deq_delay2)
     regf.io.read_addr1 := head
     regf.io.read_addr2 := an_reg
     regf.io.write_addr := tail
