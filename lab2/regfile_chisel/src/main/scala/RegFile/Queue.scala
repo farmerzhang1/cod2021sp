@@ -41,7 +41,7 @@ class Queue extends Module {
     regf.io.read_addr1 := head
     regf.io.read_addr2 := an_reg
     regf.io.write_addr := tail
-    regf.io.write_en := enq_pulse // tabnine is smart!
+    regf.io.write_en := enq_pulse && !full// tabnine is smart!
     regf.io.write_data := io.in
     when (enq_pulse && !full) {
         valids(tail) := true.B
