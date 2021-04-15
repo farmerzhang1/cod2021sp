@@ -27,6 +27,8 @@ class Queue extends Module {
     val deq_delay2 = RegNext(RegNext(io.deq))
     val enq_pulse = Wire(Bool()) // one-cycle pulse
     val deq_pulse = Wire(Bool())
+    val full = Wire(Bool())
+    val empty = Wire(Bool())
     val hexplay_count = Reg(UInt(32.W)) // utility for generating lower frequency clock (?
     val head = RegInit(0.U(3.W))
     val tail = RegInit(0.U(3.W)) // head and tail are initially 0
@@ -41,15 +43,17 @@ class Queue extends Module {
     regf.io.write_addr := tail
     regf.io.write_en := enq_pulse // tabnine is smart!
     regf.io.write_data := io.in
-    when (enq_pulse) {
+    when (enq_pulse && !full) {
         valids(tail) := true.B
         tail := tail+1.U // when tail gets 7, it adds to 0, so the queue is circular queue!
     }
-    when (deq_pulse) {
+    when (deq_pulse && !empty) {
         valids(head) := false.B
         head := head+1.U }
-    io.full := valids.reduce (_&&_)
-    io.empty := valids.reduce {(x, y) => !x && !y}
+    full := valids.reduce (_&&_)
+    empty := valids.reduce {(x, y) => !x && !y}
+    io.full := full
+    io.empty := empty
     io.out := regf.io.read_data1
 
     hexplay_count := Mux(hexplay_count >= (2000000/8).U, 0.U, hexplay_count + 1.U)
