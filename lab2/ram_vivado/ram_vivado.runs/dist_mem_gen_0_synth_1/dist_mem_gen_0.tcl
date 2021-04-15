@@ -87,7 +87,7 @@ set_property ip_output_repo d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/i
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_ip -quiet d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/dist_mem_gen_0/dist_mem_gen_0.xci
+read_ip -quiet D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/dist_mem_gen_0/dist_mem_gen_0.xci
 set_property used_in_implementation false [get_files -all d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/dist_mem_gen_0/dist_mem_gen_0_ooc.xdc]
 
 OPTRACE "Adding files" END { }

@@ -1,0 +1,89 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Thu Apr 15 17:56:48 2021
+# Process ID: 7804
+# Current directory: D:/USTC/cod2021sp/lab2/ram_vivado
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent14092 D:\USTC\cod2021sp\lab2\ram_vivado\ram_vivado.xpr
+# Log file: D:/USTC/cod2021sp/lab2/ram_vivado/vivado.log
+# Journal file: D:/USTC/cod2021sp/lab2/ram_vivado\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.xpr
+update_compile_order -fileset sources_1
+set_property -dict [list CONFIG.memory_type {single_port_ram}] [get_ips dist_mem_gen_0]
+generate_target all [get_files  D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/dist_mem_gen_0/dist_mem_gen_0.xci]
+catch { config_ip_cache -export [get_ips -all dist_mem_gen_0] }
+export_ip_user_files -of_objects [get_files D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/dist_mem_gen_0/dist_mem_gen_0.xci] -no_script -sync -force -quiet
+reset_run dist_mem_gen_0_synth_1
+launch_runs dist_mem_gen_0_synth_1 -jobs 4
+wait_on_run dist_mem_gen_0_synth_1
+export_simulation -of_objects [get_files D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/dist_mem_gen_0/dist_mem_gen_0.xci] -directory D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.ip_user_files/sim_scripts -ip_user_files_dir D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.ip_user_files -ipstatic_source_dir D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.ip_user_files/ipstatic -lib_map_path [list {modelsim=D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/compile_simlib/modelsim} {questa=D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/compile_simlib/questa} {riviera=D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/compile_simlib/riviera} {activehdl=D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+create_ip -name blk_mem_gen -vendor xilinx.com -library ip -version 8.4 -module_name blk_mem_gen_0 -dir d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip
+set_property -dict [list CONFIG.Write_Depth_A {32}] [get_ips blk_mem_gen_0]
+generate_target {instantiation_template} [get_files d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci]
+update_compile_order -fileset sources_1
+generate_target all [get_files  d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci]
+catch { config_ip_cache -export [get_ips -all blk_mem_gen_0] }
+export_ip_user_files -of_objects [get_files d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci]
+launch_runs blk_mem_gen_0_synth_1 -jobs 4
+wait_on_run blk_mem_gen_0_synth_1
+export_simulation -of_objects [get_files d:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci] -directory D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.ip_user_files/sim_scripts -ip_user_files_dir D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.ip_user_files -ipstatic_source_dir D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.ip_user_files/ipstatic -lib_map_path [list {modelsim=D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/compile_simlib/modelsim} {questa=D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/compile_simlib/questa} {riviera=D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/compile_simlib/riviera} {activehdl=D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+file mkdir D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sim_1/new
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sim_1/new/distributed_tb.v w ]
+add_files -fileset sim_1 D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sim_1/new/distributed_tb.v
+update_compile_order -fileset sim_1
+update_compile_order -fileset sim_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sim_1/new/block_tb.v w ]
+add_files -fileset sim_1 D:/USTC/cod2021sp/lab2/ram_vivado/ram_vivado.srcs/sim_1/new/block_tb.v
+update_compile_order -fileset sim_1
+launch_simulation
+source distributed_tb.tcl
+close_sim
+launch_simulation
+source distributed_tb.tcl
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top block_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+close_sim
+launch_simulation
+source block_tb.tcl
+close_sim
+launch_simulation
+source block_tb.tcl
+close_sim
+launch_simulation
+source block_tb.tcl
+close_sim
+launch_simulation
+source block_tb.tcl
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top distributed_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+source distributed_tb.tcl
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top block_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+source block_tb.tcl
+close_sim
