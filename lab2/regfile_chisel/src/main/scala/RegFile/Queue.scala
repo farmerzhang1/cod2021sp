@@ -12,16 +12,16 @@ import chisel3.experimental._
 
 class Queue extends Module {
     val io = IO (new Bundle {
-        val deq = Input(Bool())
-        val enq = Input(Bool()) // deq and enq are mutually exclusive -- !(enq && deq)
+        val deq = Input(Bool()) // deq and enq are mutually exclusive -- !(enq && deq)
+        val enq = Input(Bool()) // but if they should be high at the same time, it's okay
         val in = Input(UInt(4.W))
-        val out = Output(UInt(4.W)) // deque element
+        val out = Output(UInt(4.W)) // dequeue element
         val full = Output(Bool())
         val empty = Output(Bool())
         val an = Output(UInt(3.W)) // we have 2^3 displays
         val seg = Output(UInt(4.W))
     })
-    val an_reg = Reg(UInt(3.W)) // because chisel can't have regs at its interface like verilog, so, a workaround
+    val an_reg = Reg(UInt(3.W)) // chisel can't have regs at its interface like verilog, so, a workaround
     val seg_reg = Reg(UInt(4.W))
     val enq_delay2 = RegNext(RegNext(io.enq))
     val deq_delay2 = RegNext(RegNext(io.deq))
@@ -33,29 +33,36 @@ class Queue extends Module {
     val head = RegInit(0.U(3.W))
     val tail = RegInit(0.U(3.W)) // head and tail are initially 0
     val regf = Module(new RegFile(3)(4)) // regfile of size 8*3
-    val valids = RegInit(VecInit(Seq.fill(8)(false.B))) // a vector of validity of queue elements, initially false
+    val valids = RegInit(VecInit(Seq.fill(8)(false.B))) // a vector of validity of queue elements, all initially false
+
     io.an := an_reg
     io.seg := seg_reg
+    io.full := full
+    io.empty := empty
+    io.out := regf.io.read_data1
+
     enq_pulse := enq_delay2 && !RegNext(enq_delay2) // please refer to page 25, lab2
     deq_pulse := deq_delay2 && !RegNext(deq_delay2)
+
     regf.io.read_addr1 := head
     regf.io.read_addr2 := an_reg
     regf.io.write_addr := tail
     regf.io.write_en := enq_pulse && !full// tabnine is smart!
     regf.io.write_data := io.in
+
     when (enq_pulse && !full) {
         valids(tail) := true.B
         tail := tail+1.U // when tail gets 7, it adds to 0, so the queue is circular queue!
     }
     when (deq_pulse && !empty) {
         valids(head) := false.B
-        head := head+1.U }
-    full := valids.reduce (_&&_)
-    empty := valids.foldLeft (true.B) {(x, y) => x && !y}
-    io.full := full
-    io.empty := empty
-    io.out := regf.io.read_data1
+        head := head+1.U
+    }
 
+    full := valids.reduce (_&&_)
+    empty := valids.foldLeft (true.B) { (x, y) => x && !y } // foldl A ((A, B) -> A)
+
+    // display stuff
     hexplay_count := Mux(hexplay_count >= (2000000/8).U, 0.U, hexplay_count + 1.U)
     an_reg := Mux(hexplay_count === 0.U, an_reg + 1.U, an_reg)
     seg_reg := Mux(valids(an_reg), regf.io.read_data2, 0.U) // if invalid, zero (so don't input zero!)
