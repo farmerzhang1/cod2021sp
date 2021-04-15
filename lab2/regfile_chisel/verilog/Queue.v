@@ -241,8 +241,7 @@ module Queue(
   wire  _GEN_13 = _regf_io_write_en_T_1 ? _GEN_5 : valids_5; // @[Queue.scala 46:31 Queue.scala 36:25]
   wire  _GEN_14 = _regf_io_write_en_T_1 ? _GEN_6 : valids_6; // @[Queue.scala 46:31 Queue.scala 36:25]
   wire  _GEN_15 = _regf_io_write_en_T_1 ? _GEN_7 : valids_7; // @[Queue.scala 46:31 Queue.scala 36:25]
-  wire  empty = ~(~(~(~(~(~(~valids_0 & ~valids_1) & ~valids_2) & ~valids_3) & ~valids_4) & ~valids_5) & ~valids_6) & ~
-    valids_7; // @[Queue.scala 54:42]
+  wire  empty = ~valids_0 & ~valids_1 & ~valids_2 & ~valids_3 & ~valids_4 & ~valids_5 & ~valids_6 & ~valids_7; // @[Queue.scala 54:52]
   wire [2:0] _head_T_1 = head + 3'h1; // @[Queue.scala 52:21]
   wire [31:0] _hexplay_count_T_2 = hexplay_count + 32'h1; // @[Queue.scala 59:77]
   wire [2:0] _an_reg_T_2 = an_reg + 3'h1; // @[Queue.scala 60:49]
@@ -266,8 +265,7 @@ module Queue(
   );
   assign io_out = regf_io_read_data1; // @[Queue.scala 57:12]
   assign io_full = valids_0 & valids_1 & valids_2 & valids_3 & valids_4 & valids_5 & valids_6 & valids_7; // @[Queue.scala 53:29]
-  assign io_empty = ~(~(~(~(~(~(~valids_0 & ~valids_1) & ~valids_2) & ~valids_3) & ~valids_4) & ~valids_5) & ~valids_6)
-     & ~valids_7; // @[Queue.scala 54:42]
+  assign io_empty = ~valids_0 & ~valids_1 & ~valids_2 & ~valids_3 & ~valids_4 & ~valids_5 & ~valids_6 & ~valids_7; // @[Queue.scala 54:52]
   assign io_an = an_reg; // @[Queue.scala 37:11]
   assign io_seg = seg_reg; // @[Queue.scala 38:12]
   assign regf_clock = clock;

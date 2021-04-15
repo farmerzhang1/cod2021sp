@@ -51,7 +51,7 @@ class Queue extends Module {
         valids(head) := false.B
         head := head+1.U }
     full := valids.reduce (_&&_)
-    empty := valids.reduce {(x, y) => !x && !y}
+    empty := valids.foldLeft (true.B) {(x, y) => x && !y}
     io.full := full
     io.empty := empty
     io.out := regf.io.read_data1
