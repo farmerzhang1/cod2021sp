@@ -13,6 +13,6 @@ project/plugins/project/
 *.class
 *.out
 lab1-vivado/lab1-vivado.cache/
-report.md
-report_example.md
+report*
+*.pdf
 images/
