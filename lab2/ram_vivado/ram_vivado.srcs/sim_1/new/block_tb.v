@@ -46,11 +46,11 @@ module block_tb(
 
     initial begin
         ena = 0; wea = 0; addra = 1;
-        #20 ena = 1; wea = 1; addra = 2; dina = 150;
-        #10 wea = 1; addra = 3; dina = 96;
-        #10 wea = 0; addra = 4; dina = 444;
-        #10 wea = 1; addra = 5; dina = 3;
-        #20 $finish;
+    #20 ena = 1; wea = 1; addra = 2; dina = 150;
+    #10 wea = 1; addra = 3; dina = 96;
+    #10 wea = 0; addra = 4; dina = 444;
+    #10 wea = 1; addra = 5; dina = 3;
+    #20 $finish;
     end
 
 endmodule
