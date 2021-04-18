@@ -12,7 +12,8 @@ project/plugins/project/
 *.cache
 *.class
 *.out
-lab1-vivado/lab1-vivado.cache/
 report*
 *.pdf
 images/
+Ripes-v2.1.0-linux-x86_64.AppImage
+rars_0695981.jar
