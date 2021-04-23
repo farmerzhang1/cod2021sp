@@ -1,3 +1,4 @@
+此SS(single cycle CPU)非彼SS(指党卫队)！！！
 Chisel Project Template
 =======================
 
