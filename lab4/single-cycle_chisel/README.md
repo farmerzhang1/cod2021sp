@@ -1,4 +1,4 @@
-此SS(single cycle CPU)非彼SS(指党卫队)！！！
+此SS(single cycle CPU)非彼SS(the evil SS)！！！
 Chisel Project Template
 =======================
 
