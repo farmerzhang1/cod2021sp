@@ -19,20 +19,22 @@ import chisel3.experimental._
 //   input [7:0]a;
 //   output [31:0]spo;
 // endmodule
-
-class data_mem extends BlackBox {
-    val io = IO(new Bundle {
-        val a = Input(UInt(8.W)) // IO names will be the same
-        val d = Input(UInt(32.W))  // (without 'io_' in prefix)
-        val clk = Input(Clock()) //
-        val we = Input(Bool())
-        val spo = Output(UInt(32.W))
-    })
+class DMemIO extends Bundle {
+    val a = Input(UInt(8.W)) // IO names will be the same
+    val d = Input(UInt(32.W))  // (without 'io_' in prefix)
+    val clk = Input(Clock()) //
+    val we = Input(Bool())
+    val spo = Output(UInt(32.W))
 }
 
-class inst_mem extends BlackBox {
-    val io = IO(new Bundle {
-        val a = Input(UInt(8.W)) // IO names will be the same
-        val spo = Output(UInt(32.W))
-    })
+class DMem extends BlackBox {
+    val io = IO(new DMemIO)
+}
+
+class IMemIO extends Bundle {
+    val a = Input(UInt(8.W)) // IO names will be the same
+    val spo = Output(UInt(32.W))
+}
+class IMem extends BlackBox {
+    val io = IO(new IMemIO)
 }

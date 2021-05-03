@@ -13,7 +13,7 @@ object Control {
     val IMM_J  = 4.U(3.W) // J-type
     val IMM_B  = 5.U(3.W) // B-type
 
-    val A_XXX = 0.U(2.W) // 要送进ALU里的第一个操作数
+    val A_XXX = 0.U(2.W) // 要送进ALU里的第一个操作数，通常为寄存器堆读出来的东西
     val A_RS1 = 1.U(2.W)
     val A_IMM = 2.U(2.W)
 
@@ -60,23 +60,31 @@ object Control {
 class ControlSignals extends Bundle {
     val inst = Input(UInt(32.W))
     val imm_sel = Output(UInt(3.W))
-    val branch = Output(Bool()) // branch is here? (it needs to be AND-ed with the zero flag of ALU)
+    val br_sel = Output(UInt(1.W)) // branch is here? (it needs to be AND-ed with the zero flag of ALU)
     val mem_read = Output(Bool())
     // val mem2reg = Output(Bool()) // 这个control只控制内存和alu的输出，都没有考虑jal/jalr的情况，不弄你了啦
     val mem_write = Output(Bool())
+    val a_sel = Output(UInt(2.W))
+    val b_sel = Output(UInt(2.W))
     val alu_op = Output(UInt(3.W))
+    val pc_sel = Output(UInt(2.W))
     // val alu_src = Output(Bool())
     val reg_write = Output(Bool())
+    val wb_sel = Output(UInt(2.W))
 }
 
 class Control extends Module {
     import Control._
     val io = IO (new ControlSignals)
     val pc_sel :: imm_sel :: alu_op :: a_sel :: b_sel :: br_sel :: store_sel :: load_sel :: wb_sel :: wen :: Nil = ListLookup(io.inst, default, table)
-    io.branch := br_sel =/= BR_XXX
+    io.br_sel := br_sel
     io.imm_sel := imm_sel
     io.mem_read := load_sel =/= LD_XXX
     io.mem_write := store_sel =/= ST_XXX
     io.alu_op := alu_op
     io.reg_write := wen
+    io.pc_sel := pc_sel
+    io.a_sel := a_sel
+    io.b_sel := b_sel
+    io.wb_sel := wb_sel
 }

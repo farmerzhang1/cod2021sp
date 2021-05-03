@@ -13,11 +13,11 @@ class ImmGen extends Module {
         io.sel,
         0.S,
         Seq(
-            IMM_X -> 0.S,
-            IMM_R -> 0.S,
-            IMM_I -> io.inst(31, 20).asSInt, // automatic sign-extension here
-            IMM_S -> Cat(io.inst(31, 25), io.inst(11, 7)).asSInt,
-            IMM_B -> Cat(io.inst(31), io.inst(7), io.inst(30, 25), io.inst(11, 8), 0.U(1.W)).asSInt, // !shift left by one bit
-            IMM_J -> Cat(io.inst(31), io.inst(19, 12), io.inst(20), io.inst(30, 21), 0.U(1.W)).asSInt // also shift left 1
+            IMM_X -> 0.S, // nothing
+            IMM_R -> 0.S, // nothing
+            IMM_I -> io.inst(31, 20).asSInt, // addi (the operand), lw(the offset)automatic sign-extension here
+            IMM_S -> Cat(io.inst(31, 25), io.inst(11, 7)).asSInt, // the offset
+            IMM_B -> Cat(io.inst(31), io.inst(7), io.inst(30, 25), io.inst(11, 8), 0.U(1.W)).asSInt, //offset, !shift left by one bit
+            IMM_J -> Cat(io.inst(31), io.inst(19, 12), io.inst(20), io.inst(30, 21), 0.U(1.W)).asSInt //offset, also shift left 1
         )).asUInt
 }
