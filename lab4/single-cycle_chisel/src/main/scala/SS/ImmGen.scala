@@ -11,7 +11,7 @@ class ImmGen extends Module {
     })
     io.imm := MuxLookup (
         io.sel,
-        0.S,
+        0.S(32.W),
         Seq(
             IMM_X -> 0.S, // nothing
             IMM_R -> 0.S, // nothing
