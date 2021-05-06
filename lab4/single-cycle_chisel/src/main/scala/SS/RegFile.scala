@@ -5,11 +5,13 @@ class RegFile (val n : Int) (val w : Int) extends Module {
     val io = IO (new Bundle {
         val read_addr1 = Input(UInt(n.W))
         val read_addr2 = Input(UInt(n.W))
+        val read_addr_debug = Input(UInt(n.W))
         val write_addr = Input(UInt(n.W))
         val write_en   = Input(Bool())
         val write_data = Input(UInt(w.W))
         val read_data1 = Output(UInt(w.W))
         val read_data2 = Output(UInt(w.W))
+        val read_data_debug = Output(UInt(w.W))
     })
     // val regf = Wire(Vec(2^n, UInt(w.W)))
     val regf = RegInit(VecInit(Seq.fill(scala.math.pow(2,n).toInt)(0.U(w.W)))) // init a vector of register with 2^n zeros of width w 
@@ -18,4 +20,5 @@ class RegFile (val n : Int) (val w : Int) extends Module {
     }
     io.read_data1 := regf(io.read_addr1)
     io.read_data2 := regf(io.read_addr2)
+    io.read_data_debug := regf(io.read_addr_debug)
 }

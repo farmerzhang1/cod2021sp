@@ -5,13 +5,15 @@ import chisel3.util._
 import chisel3.experimental._
 // we need to blackboxing these two memory
 
-// module data_mem(a, d, clk, we, spo)
-// /* synthesis syn_black_box black_box_pad_pin="a[7:0],d[31:0],clk,we,spo[31:0]" */;
+// module data_mem(a, d, dpra, clk, we, spo, dpo)
+// /* synthesis syn_black_box black_box_pad_pin="a[7:0],d[31:0],dpra[7:0],clk,we,spo[31:0],dpo[31:0]" */;
 //   input [7:0]a;
 //   input [31:0]d;
+//   input [7:0]dpra;
 //   input clk;
 //   input we;
 //   output [31:0]spo;
+//   output [31:0]dpo;
 // endmodule
 
 // module inst_mem(a, spo)
@@ -22,8 +24,10 @@ import chisel3.experimental._
 class DMemIO extends Bundle {
     val a = Input(UInt(8.W)) // IO names will be the same
     val d = Input(UInt(32.W))  // (without 'io_' in prefix)
-    val clk = Input(Clock()) //
+    // val clk = Input(Clock()) //
+    val dpra = Input(UInt(8.W))
     val we = Input(Bool())
+    val dpo = Output(UInt(32.W))
     val spo = Output(UInt(32.W))
 }
 
