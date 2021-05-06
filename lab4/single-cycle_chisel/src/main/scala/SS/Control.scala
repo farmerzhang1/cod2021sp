@@ -50,9 +50,9 @@ object Control {
     val table = Array (
         ADD  -> List(PC_4,   IMM_X, ALU_ADD, A_RS1, B_RS2, BR_XXX, ST_XXX, LD_XXX, WB_ALU, Y),
         ADDI -> List(PC_4,   IMM_I, ALU_ADD, A_RS1, B_IMM, BR_XXX, ST_XXX, LD_XXX, WB_ALU, Y),
-        LW   -> List(PC_4,   IMM_S, ALU_ADD, A_RS1, B_IMM, BR_XXX, ST_XXX, LD_LW,  WB_MEM, Y),
-        SW   -> List(PC_4,   IMM_S, ALU_ADD, A_RS1, B_RS2, BR_XXX, ST_SW,  LD_XXX, WB_ALU, N),
-        BEQ  -> List(PC_BR,  IMM_B, ALU_ADD, A_RS1, B_RS2, BR_EQ,  ST_XXX, LD_XXX, WB_ALU, N),
+        LW   -> List(PC_4,   IMM_I, ALU_ADD, A_RS1, B_IMM, BR_XXX, ST_XXX, LD_LW,  WB_MEM, Y),
+        SW   -> List(PC_4,   IMM_S, ALU_ADD, A_RS1, B_IMM, BR_XXX, ST_SW,  LD_XXX, WB_ALU, N),
+        BEQ  -> List(PC_BR,  IMM_B, ALU_SUB, A_RS1, B_RS2, BR_EQ,  ST_XXX, LD_XXX, WB_ALU, N),
         JAL  -> List(PC_JMP, IMM_J, ALU_ADD, A_RS1, B_RS2, BR_XXX, ST_XXX, LD_XXX, WB_PC4, Y)
     )
 }
