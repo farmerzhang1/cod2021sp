@@ -1,7 +1,7 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-// Date        : Sat May  1 13:21:47 2021
+// Date        : Tue May  4 23:12:30 2021
 // Host        : TAPLOP running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim {d:/USTC/21spring books/Computer
 //               Organization/cod2021sp/lab4/sscpu_vivado/sscpu_vivado.srcs/sources_1/ip/data_mem/data_mem_sim_netlist.v}
@@ -17,44 +17,47 @@
 module data_mem
    (a,
     d,
+    dpra,
     clk,
     we,
-    spo);
+    spo,
+    dpo);
   input [7:0]a;
   input [31:0]d;
+  input [7:0]dpra;
   input clk;
   input we;
   output [31:0]spo;
+  output [31:0]dpo;
 
   wire [7:0]a;
   wire clk;
   wire [31:0]d;
+  wire [31:0]dpo;
+  wire [7:0]dpra;
   wire [31:0]spo;
   wire we;
-  wire [31:0]NLW_U0_dpo_UNCONNECTED;
   wire [31:0]NLW_U0_qdpo_UNCONNECTED;
   wire [31:0]NLW_U0_qspo_UNCONNECTED;
 
   (* C_FAMILY = "artix7" *) 
   (* C_HAS_CLK = "1" *) 
   (* C_HAS_D = "1" *) 
-  (* C_HAS_DPO = "0" *) 
-  (* C_HAS_DPRA = "0" *) 
-  (* C_HAS_QDPO = "0" *) 
-  (* C_HAS_QDPO_CE = "0" *) 
-  (* C_HAS_QDPO_CLK = "0" *) 
-  (* C_HAS_QDPO_RST = "0" *) 
-  (* C_HAS_QDPO_SRST = "0" *) 
   (* C_HAS_WE = "1" *) 
-  (* C_MEM_TYPE = "1" *) 
-  (* C_QCE_JOINED = "0" *) 
-  (* C_REG_DPRA_INPUT = "0" *) 
+  (* C_MEM_TYPE = "2" *) 
   (* KEEP_HIERARCHY = "soft" *) 
   (* c_addr_width = "8" *) 
   (* c_default_data = "0" *) 
   (* c_depth = "256" *) 
   (* c_elaboration_dir = "./" *) 
+  (* c_has_dpo = "1" *) 
+  (* c_has_dpra = "1" *) 
   (* c_has_i_ce = "0" *) 
+  (* c_has_qdpo = "0" *) 
+  (* c_has_qdpo_ce = "0" *) 
+  (* c_has_qdpo_clk = "0" *) 
+  (* c_has_qdpo_rst = "0" *) 
+  (* c_has_qdpo_srst = "0" *) 
   (* c_has_qspo = "0" *) 
   (* c_has_qspo_ce = "0" *) 
   (* c_has_qspo_rst = "0" *) 
@@ -63,17 +66,19 @@ module data_mem
   (* c_mem_init_file = "no_coe_file_loaded" *) 
   (* c_parser_type = "1" *) 
   (* c_pipeline_stages = "0" *) 
+  (* c_qce_joined = "0" *) 
   (* c_qualify_we = "0" *) 
   (* c_read_mif = "0" *) 
   (* c_reg_a_d_inputs = "0" *) 
+  (* c_reg_dpra_input = "0" *) 
   (* c_sync_enable = "1" *) 
   (* c_width = "32" *) 
   data_mem_dist_mem_gen_v8_0_13 U0
        (.a(a),
         .clk(clk),
         .d(d),
-        .dpo(NLW_U0_dpo_UNCONNECTED[31:0]),
-        .dpra({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .dpo(dpo),
+        .dpra(dpra),
         .i_ce(1'b1),
         .qdpo(NLW_U0_qdpo_UNCONNECTED[31:0]),
         .qdpo_ce(1'b1),
@@ -90,12 +95,12 @@ endmodule
 
 (* C_ADDR_WIDTH = "8" *) (* C_DEFAULT_DATA = "0" *) (* C_DEPTH = "256" *) 
 (* C_ELABORATION_DIR = "./" *) (* C_FAMILY = "artix7" *) (* C_HAS_CLK = "1" *) 
-(* C_HAS_D = "1" *) (* C_HAS_DPO = "0" *) (* C_HAS_DPRA = "0" *) 
+(* C_HAS_D = "1" *) (* C_HAS_DPO = "1" *) (* C_HAS_DPRA = "1" *) 
 (* C_HAS_I_CE = "0" *) (* C_HAS_QDPO = "0" *) (* C_HAS_QDPO_CE = "0" *) 
 (* C_HAS_QDPO_CLK = "0" *) (* C_HAS_QDPO_RST = "0" *) (* C_HAS_QDPO_SRST = "0" *) 
 (* C_HAS_QSPO = "0" *) (* C_HAS_QSPO_CE = "0" *) (* C_HAS_QSPO_RST = "0" *) 
 (* C_HAS_QSPO_SRST = "0" *) (* C_HAS_SPO = "1" *) (* C_HAS_WE = "1" *) 
-(* C_MEM_INIT_FILE = "no_coe_file_loaded" *) (* C_MEM_TYPE = "1" *) (* C_PARSER_TYPE = "1" *) 
+(* C_MEM_INIT_FILE = "no_coe_file_loaded" *) (* C_MEM_TYPE = "2" *) (* C_PARSER_TYPE = "1" *) 
 (* C_PIPELINE_STAGES = "0" *) (* C_QCE_JOINED = "0" *) (* C_QUALIFY_WE = "0" *) 
 (* C_READ_MIF = "0" *) (* C_REG_A_D_INPUTS = "0" *) (* C_REG_DPRA_INPUT = "0" *) 
 (* C_SYNC_ENABLE = "1" *) (* C_WIDTH = "32" *) (* ORIG_REF_NAME = "dist_mem_gen_v8_0_13" *) 
@@ -139,41 +144,11 @@ module data_mem_dist_mem_gen_v8_0_13
   wire [7:0]a;
   wire clk;
   wire [31:0]d;
+  wire [31:0]dpo;
+  wire [7:0]dpra;
   wire [31:0]spo;
   wire we;
 
-  assign dpo[31] = \<const0> ;
-  assign dpo[30] = \<const0> ;
-  assign dpo[29] = \<const0> ;
-  assign dpo[28] = \<const0> ;
-  assign dpo[27] = \<const0> ;
-  assign dpo[26] = \<const0> ;
-  assign dpo[25] = \<const0> ;
-  assign dpo[24] = \<const0> ;
-  assign dpo[23] = \<const0> ;
-  assign dpo[22] = \<const0> ;
-  assign dpo[21] = \<const0> ;
-  assign dpo[20] = \<const0> ;
-  assign dpo[19] = \<const0> ;
-  assign dpo[18] = \<const0> ;
-  assign dpo[17] = \<const0> ;
-  assign dpo[16] = \<const0> ;
-  assign dpo[15] = \<const0> ;
-  assign dpo[14] = \<const0> ;
-  assign dpo[13] = \<const0> ;
-  assign dpo[12] = \<const0> ;
-  assign dpo[11] = \<const0> ;
-  assign dpo[10] = \<const0> ;
-  assign dpo[9] = \<const0> ;
-  assign dpo[8] = \<const0> ;
-  assign dpo[7] = \<const0> ;
-  assign dpo[6] = \<const0> ;
-  assign dpo[5] = \<const0> ;
-  assign dpo[4] = \<const0> ;
-  assign dpo[3] = \<const0> ;
-  assign dpo[2] = \<const0> ;
-  assign dpo[1] = \<const0> ;
-  assign dpo[0] = \<const0> ;
   assign qdpo[31] = \<const0> ;
   assign qdpo[30] = \<const0> ;
   assign qdpo[29] = \<const0> ;
@@ -244,6 +219,8 @@ module data_mem_dist_mem_gen_v8_0_13
        (.a(a),
         .clk(clk),
         .d(d),
+        .dpo(dpo),
+        .dpra(dpra),
         .spo(spo),
         .we(we));
 endmodule
@@ -251,50 +228,771 @@ endmodule
 (* ORIG_REF_NAME = "dist_mem_gen_v8_0_13_synth" *) 
 module data_mem_dist_mem_gen_v8_0_13_synth
    (spo,
+    dpo,
+    we,
+    a,
     clk,
     d,
-    we,
-    a);
+    dpra);
   output [31:0]spo;
-  input clk;
-  input [31:0]d;
+  output [31:0]dpo;
   input we;
   input [7:0]a;
+  input clk;
+  input [31:0]d;
+  input [7:0]dpra;
 
   wire [7:0]a;
   wire clk;
   wire [31:0]d;
+  wire [31:0]dpo;
+  wire [7:0]dpra;
   wire [31:0]spo;
   wire we;
 
-  data_mem_spram \gen_sp_ram.spram_inst 
+  data_mem_dpram \gen_dp_ram.dpram_inst 
        (.a(a),
         .clk(clk),
         .d(d),
+        .dpo(dpo),
+        .dpra(dpra),
         .spo(spo),
         .we(we));
 endmodule
 
-(* ORIG_REF_NAME = "spram" *) 
-module data_mem_spram
+(* ORIG_REF_NAME = "dpram" *) 
+module data_mem_dpram
    (spo,
+    dpo,
+    we,
+    a,
     clk,
     d,
-    we,
-    a);
+    dpra);
   output [31:0]spo;
-  input clk;
-  input [31:0]d;
+  output [31:0]dpo;
   input we;
   input [7:0]a;
+  input clk;
+  input [31:0]d;
+  input [7:0]dpra;
 
   wire [7:0]a;
   wire clk;
   wire [31:0]d;
+  wire [31:0]dpo;
+  wire [7:0]dpra;
+  (* RTL_KEEP = "true" *) wire [31:0]qdpo_int;
   (* RTL_KEEP = "true" *) wire [31:0]qspo_int;
+  wire ram_reg_0_127_0_0_i_1_n_0;
+  wire ram_reg_0_127_0_0_n_0;
+  wire ram_reg_0_127_0_0_n_1;
+  wire ram_reg_0_127_10_10_n_0;
+  wire ram_reg_0_127_10_10_n_1;
+  wire ram_reg_0_127_11_11_n_0;
+  wire ram_reg_0_127_11_11_n_1;
+  wire ram_reg_0_127_12_12_n_0;
+  wire ram_reg_0_127_12_12_n_1;
+  wire ram_reg_0_127_13_13_n_0;
+  wire ram_reg_0_127_13_13_n_1;
+  wire ram_reg_0_127_14_14_n_0;
+  wire ram_reg_0_127_14_14_n_1;
+  wire ram_reg_0_127_15_15_n_0;
+  wire ram_reg_0_127_15_15_n_1;
+  wire ram_reg_0_127_16_16_n_0;
+  wire ram_reg_0_127_16_16_n_1;
+  wire ram_reg_0_127_17_17_n_0;
+  wire ram_reg_0_127_17_17_n_1;
+  wire ram_reg_0_127_18_18_n_0;
+  wire ram_reg_0_127_18_18_n_1;
+  wire ram_reg_0_127_19_19_n_0;
+  wire ram_reg_0_127_19_19_n_1;
+  wire ram_reg_0_127_1_1_n_0;
+  wire ram_reg_0_127_1_1_n_1;
+  wire ram_reg_0_127_20_20_n_0;
+  wire ram_reg_0_127_20_20_n_1;
+  wire ram_reg_0_127_21_21_n_0;
+  wire ram_reg_0_127_21_21_n_1;
+  wire ram_reg_0_127_22_22_n_0;
+  wire ram_reg_0_127_22_22_n_1;
+  wire ram_reg_0_127_23_23_n_0;
+  wire ram_reg_0_127_23_23_n_1;
+  wire ram_reg_0_127_24_24_n_0;
+  wire ram_reg_0_127_24_24_n_1;
+  wire ram_reg_0_127_25_25_n_0;
+  wire ram_reg_0_127_25_25_n_1;
+  wire ram_reg_0_127_26_26_n_0;
+  wire ram_reg_0_127_26_26_n_1;
+  wire ram_reg_0_127_27_27_n_0;
+  wire ram_reg_0_127_27_27_n_1;
+  wire ram_reg_0_127_28_28_n_0;
+  wire ram_reg_0_127_28_28_n_1;
+  wire ram_reg_0_127_29_29_n_0;
+  wire ram_reg_0_127_29_29_n_1;
+  wire ram_reg_0_127_2_2_n_0;
+  wire ram_reg_0_127_2_2_n_1;
+  wire ram_reg_0_127_30_30_n_0;
+  wire ram_reg_0_127_30_30_n_1;
+  wire ram_reg_0_127_31_31_n_0;
+  wire ram_reg_0_127_31_31_n_1;
+  wire ram_reg_0_127_3_3_n_0;
+  wire ram_reg_0_127_3_3_n_1;
+  wire ram_reg_0_127_4_4_n_0;
+  wire ram_reg_0_127_4_4_n_1;
+  wire ram_reg_0_127_5_5_n_0;
+  wire ram_reg_0_127_5_5_n_1;
+  wire ram_reg_0_127_6_6_n_0;
+  wire ram_reg_0_127_6_6_n_1;
+  wire ram_reg_0_127_7_7_n_0;
+  wire ram_reg_0_127_7_7_n_1;
+  wire ram_reg_0_127_8_8_n_0;
+  wire ram_reg_0_127_8_8_n_1;
+  wire ram_reg_0_127_9_9_n_0;
+  wire ram_reg_0_127_9_9_n_1;
+  wire ram_reg_128_255_0_0_i_1_n_0;
+  wire ram_reg_128_255_0_0_n_0;
+  wire ram_reg_128_255_0_0_n_1;
+  wire ram_reg_128_255_10_10_n_0;
+  wire ram_reg_128_255_10_10_n_1;
+  wire ram_reg_128_255_11_11_n_0;
+  wire ram_reg_128_255_11_11_n_1;
+  wire ram_reg_128_255_12_12_n_0;
+  wire ram_reg_128_255_12_12_n_1;
+  wire ram_reg_128_255_13_13_n_0;
+  wire ram_reg_128_255_13_13_n_1;
+  wire ram_reg_128_255_14_14_n_0;
+  wire ram_reg_128_255_14_14_n_1;
+  wire ram_reg_128_255_15_15_n_0;
+  wire ram_reg_128_255_15_15_n_1;
+  wire ram_reg_128_255_16_16_n_0;
+  wire ram_reg_128_255_16_16_n_1;
+  wire ram_reg_128_255_17_17_n_0;
+  wire ram_reg_128_255_17_17_n_1;
+  wire ram_reg_128_255_18_18_n_0;
+  wire ram_reg_128_255_18_18_n_1;
+  wire ram_reg_128_255_19_19_n_0;
+  wire ram_reg_128_255_19_19_n_1;
+  wire ram_reg_128_255_1_1_n_0;
+  wire ram_reg_128_255_1_1_n_1;
+  wire ram_reg_128_255_20_20_n_0;
+  wire ram_reg_128_255_20_20_n_1;
+  wire ram_reg_128_255_21_21_n_0;
+  wire ram_reg_128_255_21_21_n_1;
+  wire ram_reg_128_255_22_22_n_0;
+  wire ram_reg_128_255_22_22_n_1;
+  wire ram_reg_128_255_23_23_n_0;
+  wire ram_reg_128_255_23_23_n_1;
+  wire ram_reg_128_255_24_24_n_0;
+  wire ram_reg_128_255_24_24_n_1;
+  wire ram_reg_128_255_25_25_n_0;
+  wire ram_reg_128_255_25_25_n_1;
+  wire ram_reg_128_255_26_26_n_0;
+  wire ram_reg_128_255_26_26_n_1;
+  wire ram_reg_128_255_27_27_n_0;
+  wire ram_reg_128_255_27_27_n_1;
+  wire ram_reg_128_255_28_28_n_0;
+  wire ram_reg_128_255_28_28_n_1;
+  wire ram_reg_128_255_29_29_n_0;
+  wire ram_reg_128_255_29_29_n_1;
+  wire ram_reg_128_255_2_2_n_0;
+  wire ram_reg_128_255_2_2_n_1;
+  wire ram_reg_128_255_30_30_n_0;
+  wire ram_reg_128_255_30_30_n_1;
+  wire ram_reg_128_255_31_31_n_0;
+  wire ram_reg_128_255_31_31_n_1;
+  wire ram_reg_128_255_3_3_n_0;
+  wire ram_reg_128_255_3_3_n_1;
+  wire ram_reg_128_255_4_4_n_0;
+  wire ram_reg_128_255_4_4_n_1;
+  wire ram_reg_128_255_5_5_n_0;
+  wire ram_reg_128_255_5_5_n_1;
+  wire ram_reg_128_255_6_6_n_0;
+  wire ram_reg_128_255_6_6_n_1;
+  wire ram_reg_128_255_7_7_n_0;
+  wire ram_reg_128_255_7_7_n_1;
+  wire ram_reg_128_255_8_8_n_0;
+  wire ram_reg_128_255_8_8_n_1;
+  wire ram_reg_128_255_9_9_n_0;
+  wire ram_reg_128_255_9_9_n_1;
   wire [31:0]spo;
   wire we;
 
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[0]_INST_0 
+       (.I0(ram_reg_128_255_0_0_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_0_0_n_0),
+        .O(dpo[0]));
+  (* SOFT_HLUTNM = "soft_lutpair11" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[10]_INST_0 
+       (.I0(ram_reg_128_255_10_10_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_10_10_n_0),
+        .O(dpo[10]));
+  (* SOFT_HLUTNM = "soft_lutpair11" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[11]_INST_0 
+       (.I0(ram_reg_128_255_11_11_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_11_11_n_0),
+        .O(dpo[11]));
+  (* SOFT_HLUTNM = "soft_lutpair13" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[12]_INST_0 
+       (.I0(ram_reg_128_255_12_12_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_12_12_n_0),
+        .O(dpo[12]));
+  (* SOFT_HLUTNM = "soft_lutpair13" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[13]_INST_0 
+       (.I0(ram_reg_128_255_13_13_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_13_13_n_0),
+        .O(dpo[13]));
+  (* SOFT_HLUTNM = "soft_lutpair15" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[14]_INST_0 
+       (.I0(ram_reg_128_255_14_14_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_14_14_n_0),
+        .O(dpo[14]));
+  (* SOFT_HLUTNM = "soft_lutpair15" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[15]_INST_0 
+       (.I0(ram_reg_128_255_15_15_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_15_15_n_0),
+        .O(dpo[15]));
+  (* SOFT_HLUTNM = "soft_lutpair17" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[16]_INST_0 
+       (.I0(ram_reg_128_255_16_16_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_16_16_n_0),
+        .O(dpo[16]));
+  (* SOFT_HLUTNM = "soft_lutpair17" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[17]_INST_0 
+       (.I0(ram_reg_128_255_17_17_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_17_17_n_0),
+        .O(dpo[17]));
+  (* SOFT_HLUTNM = "soft_lutpair19" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[18]_INST_0 
+       (.I0(ram_reg_128_255_18_18_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_18_18_n_0),
+        .O(dpo[18]));
+  (* SOFT_HLUTNM = "soft_lutpair19" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[19]_INST_0 
+       (.I0(ram_reg_128_255_19_19_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_19_19_n_0),
+        .O(dpo[19]));
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[1]_INST_0 
+       (.I0(ram_reg_128_255_1_1_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_1_1_n_0),
+        .O(dpo[1]));
+  (* SOFT_HLUTNM = "soft_lutpair21" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[20]_INST_0 
+       (.I0(ram_reg_128_255_20_20_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_20_20_n_0),
+        .O(dpo[20]));
+  (* SOFT_HLUTNM = "soft_lutpair21" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[21]_INST_0 
+       (.I0(ram_reg_128_255_21_21_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_21_21_n_0),
+        .O(dpo[21]));
+  (* SOFT_HLUTNM = "soft_lutpair23" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[22]_INST_0 
+       (.I0(ram_reg_128_255_22_22_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_22_22_n_0),
+        .O(dpo[22]));
+  (* SOFT_HLUTNM = "soft_lutpair23" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[23]_INST_0 
+       (.I0(ram_reg_128_255_23_23_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_23_23_n_0),
+        .O(dpo[23]));
+  (* SOFT_HLUTNM = "soft_lutpair25" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[24]_INST_0 
+       (.I0(ram_reg_128_255_24_24_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_24_24_n_0),
+        .O(dpo[24]));
+  (* SOFT_HLUTNM = "soft_lutpair25" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[25]_INST_0 
+       (.I0(ram_reg_128_255_25_25_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_25_25_n_0),
+        .O(dpo[25]));
+  (* SOFT_HLUTNM = "soft_lutpair27" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[26]_INST_0 
+       (.I0(ram_reg_128_255_26_26_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_26_26_n_0),
+        .O(dpo[26]));
+  (* SOFT_HLUTNM = "soft_lutpair27" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[27]_INST_0 
+       (.I0(ram_reg_128_255_27_27_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_27_27_n_0),
+        .O(dpo[27]));
+  (* SOFT_HLUTNM = "soft_lutpair29" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[28]_INST_0 
+       (.I0(ram_reg_128_255_28_28_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_28_28_n_0),
+        .O(dpo[28]));
+  (* SOFT_HLUTNM = "soft_lutpair29" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[29]_INST_0 
+       (.I0(ram_reg_128_255_29_29_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_29_29_n_0),
+        .O(dpo[29]));
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[2]_INST_0 
+       (.I0(ram_reg_128_255_2_2_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_2_2_n_0),
+        .O(dpo[2]));
+  (* SOFT_HLUTNM = "soft_lutpair31" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[30]_INST_0 
+       (.I0(ram_reg_128_255_30_30_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_30_30_n_0),
+        .O(dpo[30]));
+  (* SOFT_HLUTNM = "soft_lutpair31" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[31]_INST_0 
+       (.I0(ram_reg_128_255_31_31_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_31_31_n_0),
+        .O(dpo[31]));
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[3]_INST_0 
+       (.I0(ram_reg_128_255_3_3_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_3_3_n_0),
+        .O(dpo[3]));
+  (* SOFT_HLUTNM = "soft_lutpair5" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[4]_INST_0 
+       (.I0(ram_reg_128_255_4_4_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_4_4_n_0),
+        .O(dpo[4]));
+  (* SOFT_HLUTNM = "soft_lutpair5" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[5]_INST_0 
+       (.I0(ram_reg_128_255_5_5_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_5_5_n_0),
+        .O(dpo[5]));
+  (* SOFT_HLUTNM = "soft_lutpair7" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[6]_INST_0 
+       (.I0(ram_reg_128_255_6_6_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_6_6_n_0),
+        .O(dpo[6]));
+  (* SOFT_HLUTNM = "soft_lutpair7" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[7]_INST_0 
+       (.I0(ram_reg_128_255_7_7_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_7_7_n_0),
+        .O(dpo[7]));
+  (* SOFT_HLUTNM = "soft_lutpair9" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[8]_INST_0 
+       (.I0(ram_reg_128_255_8_8_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_8_8_n_0),
+        .O(dpo[8]));
+  (* SOFT_HLUTNM = "soft_lutpair9" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \dpo[9]_INST_0 
+       (.I0(ram_reg_128_255_9_9_n_0),
+        .I1(dpra[7]),
+        .I2(ram_reg_0_127_9_9_n_0),
+        .O(dpo[9]));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[0] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[0]),
+        .Q(qdpo_int[0]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[10] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[10]),
+        .Q(qdpo_int[10]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[11] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[11]),
+        .Q(qdpo_int[11]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[12] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[12]),
+        .Q(qdpo_int[12]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[13] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[13]),
+        .Q(qdpo_int[13]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[14] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[14]),
+        .Q(qdpo_int[14]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[15] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[15]),
+        .Q(qdpo_int[15]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[16] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[16]),
+        .Q(qdpo_int[16]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[17] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[17]),
+        .Q(qdpo_int[17]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[18] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[18]),
+        .Q(qdpo_int[18]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[19] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[19]),
+        .Q(qdpo_int[19]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[1] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[1]),
+        .Q(qdpo_int[1]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[20] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[20]),
+        .Q(qdpo_int[20]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[21] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[21]),
+        .Q(qdpo_int[21]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[22] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[22]),
+        .Q(qdpo_int[22]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[23] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[23]),
+        .Q(qdpo_int[23]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[24] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[24]),
+        .Q(qdpo_int[24]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[25] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[25]),
+        .Q(qdpo_int[25]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[26] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[26]),
+        .Q(qdpo_int[26]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[27] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[27]),
+        .Q(qdpo_int[27]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[28] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[28]),
+        .Q(qdpo_int[28]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[29] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[29]),
+        .Q(qdpo_int[29]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[2] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[2]),
+        .Q(qdpo_int[2]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[30] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[30]),
+        .Q(qdpo_int[30]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[31] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[31]),
+        .Q(qdpo_int[31]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[3] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[3]),
+        .Q(qdpo_int[3]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[4] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[4]),
+        .Q(qdpo_int[4]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[5] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[5]),
+        .Q(qdpo_int[5]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[6] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[6]),
+        .Q(qdpo_int[6]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[7] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[7]),
+        .Q(qdpo_int[7]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[8] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[8]),
+        .Q(qdpo_int[8]),
+        .R(1'b0));
+  (* KEEP = "yes" *) 
+  (* equivalent_register_removal = "no" *) 
+  FDRE #(
+    .INIT(1'b0)) 
+    \qdpo_int_reg[9] 
+       (.C(clk),
+        .CE(1'b1),
+        .D(dpo[9]),
+        .Q(qdpo_int[9]),
+        .R(1'b0));
   (* KEEP = "yes" *) 
   (* equivalent_register_removal = "no" *) 
   FDRE #(
@@ -615,518 +1313,1490 @@ module data_mem_spram
         .D(spo[9]),
         .Q(qspo_int[9]),
         .R(1'b0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
   (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "0" *) 
+  (* ram_slice_end = "0" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_0_0
+       (.A(a[6:0]),
+        .D(d[0]),
+        .DPO(ram_reg_0_127_0_0_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_0_0_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  LUT2 #(
+    .INIT(4'h2)) 
+    ram_reg_0_127_0_0_i_1
+       (.I0(we),
+        .I1(a[7]),
+        .O(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "10" *) 
+  (* ram_slice_end = "10" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_10_10
+       (.A(a[6:0]),
+        .D(d[10]),
+        .DPO(ram_reg_0_127_10_10_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_10_10_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "11" *) 
+  (* ram_slice_end = "11" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_11_11
+       (.A(a[6:0]),
+        .D(d[11]),
+        .DPO(ram_reg_0_127_11_11_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_11_11_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "12" *) 
+  (* ram_slice_end = "12" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_12_12
+       (.A(a[6:0]),
+        .D(d[12]),
+        .DPO(ram_reg_0_127_12_12_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_12_12_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "13" *) 
+  (* ram_slice_end = "13" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_13_13
+       (.A(a[6:0]),
+        .D(d[13]),
+        .DPO(ram_reg_0_127_13_13_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_13_13_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "14" *) 
+  (* ram_slice_end = "14" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_14_14
+       (.A(a[6:0]),
+        .D(d[14]),
+        .DPO(ram_reg_0_127_14_14_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_14_14_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "15" *) 
+  (* ram_slice_end = "15" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_15_15
+       (.A(a[6:0]),
+        .D(d[15]),
+        .DPO(ram_reg_0_127_15_15_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_15_15_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "16" *) 
+  (* ram_slice_end = "16" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_16_16
+       (.A(a[6:0]),
+        .D(d[16]),
+        .DPO(ram_reg_0_127_16_16_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_16_16_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "17" *) 
+  (* ram_slice_end = "17" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_17_17
+       (.A(a[6:0]),
+        .D(d[17]),
+        .DPO(ram_reg_0_127_17_17_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_17_17_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "18" *) 
+  (* ram_slice_end = "18" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_18_18
+       (.A(a[6:0]),
+        .D(d[18]),
+        .DPO(ram_reg_0_127_18_18_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_18_18_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "19" *) 
+  (* ram_slice_end = "19" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_19_19
+       (.A(a[6:0]),
+        .D(d[19]),
+        .DPO(ram_reg_0_127_19_19_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_19_19_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "1" *) 
+  (* ram_slice_end = "1" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_1_1
+       (.A(a[6:0]),
+        .D(d[1]),
+        .DPO(ram_reg_0_127_1_1_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_1_1_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "20" *) 
+  (* ram_slice_end = "20" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_20_20
+       (.A(a[6:0]),
+        .D(d[20]),
+        .DPO(ram_reg_0_127_20_20_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_20_20_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "21" *) 
+  (* ram_slice_end = "21" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_21_21
+       (.A(a[6:0]),
+        .D(d[21]),
+        .DPO(ram_reg_0_127_21_21_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_21_21_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "22" *) 
+  (* ram_slice_end = "22" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_22_22
+       (.A(a[6:0]),
+        .D(d[22]),
+        .DPO(ram_reg_0_127_22_22_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_22_22_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "23" *) 
+  (* ram_slice_end = "23" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_23_23
+       (.A(a[6:0]),
+        .D(d[23]),
+        .DPO(ram_reg_0_127_23_23_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_23_23_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "24" *) 
+  (* ram_slice_end = "24" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_24_24
+       (.A(a[6:0]),
+        .D(d[24]),
+        .DPO(ram_reg_0_127_24_24_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_24_24_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "25" *) 
+  (* ram_slice_end = "25" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_25_25
+       (.A(a[6:0]),
+        .D(d[25]),
+        .DPO(ram_reg_0_127_25_25_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_25_25_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "26" *) 
+  (* ram_slice_end = "26" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_26_26
+       (.A(a[6:0]),
+        .D(d[26]),
+        .DPO(ram_reg_0_127_26_26_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_26_26_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "27" *) 
+  (* ram_slice_end = "27" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_27_27
+       (.A(a[6:0]),
+        .D(d[27]),
+        .DPO(ram_reg_0_127_27_27_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_27_27_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "28" *) 
+  (* ram_slice_end = "28" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_28_28
+       (.A(a[6:0]),
+        .D(d[28]),
+        .DPO(ram_reg_0_127_28_28_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_28_28_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "29" *) 
+  (* ram_slice_end = "29" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_29_29
+       (.A(a[6:0]),
+        .D(d[29]),
+        .DPO(ram_reg_0_127_29_29_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_29_29_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "2" *) 
+  (* ram_slice_end = "2" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_2_2
+       (.A(a[6:0]),
+        .D(d[2]),
+        .DPO(ram_reg_0_127_2_2_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_2_2_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "30" *) 
+  (* ram_slice_end = "30" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_30_30
+       (.A(a[6:0]),
+        .D(d[30]),
+        .DPO(ram_reg_0_127_30_30_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_30_30_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "31" *) 
+  (* ram_slice_end = "31" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_31_31
+       (.A(a[6:0]),
+        .D(d[31]),
+        .DPO(ram_reg_0_127_31_31_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_31_31_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "3" *) 
+  (* ram_slice_end = "3" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_3_3
+       (.A(a[6:0]),
+        .D(d[3]),
+        .DPO(ram_reg_0_127_3_3_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_3_3_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "4" *) 
+  (* ram_slice_end = "4" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_4_4
+       (.A(a[6:0]),
+        .D(d[4]),
+        .DPO(ram_reg_0_127_4_4_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_4_4_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "5" *) 
+  (* ram_slice_end = "5" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_5_5
+       (.A(a[6:0]),
+        .D(d[5]),
+        .DPO(ram_reg_0_127_5_5_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_5_5_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "6" *) 
+  (* ram_slice_end = "6" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_6_6
+       (.A(a[6:0]),
+        .D(d[6]),
+        .DPO(ram_reg_0_127_6_6_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_6_6_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "7" *) 
+  (* ram_slice_end = "7" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_7_7
+       (.A(a[6:0]),
+        .D(d[7]),
+        .DPO(ram_reg_0_127_7_7_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_7_7_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "8" *) 
+  (* ram_slice_end = "8" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_8_8
+       (.A(a[6:0]),
+        .D(d[8]),
+        .DPO(ram_reg_0_127_8_8_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_8_8_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "127" *) 
+  (* ram_offset = "0" *) 
+  (* ram_slice_begin = "9" *) 
+  (* ram_slice_end = "9" *) 
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_0_127_9_9
+       (.A(a[6:0]),
+        .D(d[9]),
+        .DPO(ram_reg_0_127_9_9_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_0_127_9_9_n_1),
+        .WCLK(clk),
+        .WE(ram_reg_0_127_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
+  (* RTL_RAM_BITS = "8192" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "0" *) 
   (* ram_slice_end = "0" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_0_0
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_0_0
+       (.A(a[6:0]),
         .D(d[0]),
-        .O(spo[0]),
+        .DPO(ram_reg_128_255_0_0_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_0_0_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  LUT2 #(
+    .INIT(4'h8)) 
+    ram_reg_128_255_0_0_i_1
+       (.I0(we),
+        .I1(a[7]),
+        .O(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "10" *) 
   (* ram_slice_end = "10" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_10_10
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_10_10
+       (.A(a[6:0]),
         .D(d[10]),
-        .O(spo[10]),
+        .DPO(ram_reg_128_255_10_10_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_10_10_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "11" *) 
   (* ram_slice_end = "11" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_11_11
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_11_11
+       (.A(a[6:0]),
         .D(d[11]),
-        .O(spo[11]),
+        .DPO(ram_reg_128_255_11_11_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_11_11_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "12" *) 
   (* ram_slice_end = "12" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_12_12
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_12_12
+       (.A(a[6:0]),
         .D(d[12]),
-        .O(spo[12]),
+        .DPO(ram_reg_128_255_12_12_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_12_12_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "13" *) 
   (* ram_slice_end = "13" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_13_13
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_13_13
+       (.A(a[6:0]),
         .D(d[13]),
-        .O(spo[13]),
+        .DPO(ram_reg_128_255_13_13_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_13_13_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "14" *) 
   (* ram_slice_end = "14" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_14_14
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_14_14
+       (.A(a[6:0]),
         .D(d[14]),
-        .O(spo[14]),
+        .DPO(ram_reg_128_255_14_14_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_14_14_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "15" *) 
   (* ram_slice_end = "15" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_15_15
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_15_15
+       (.A(a[6:0]),
         .D(d[15]),
-        .O(spo[15]),
+        .DPO(ram_reg_128_255_15_15_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_15_15_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "16" *) 
   (* ram_slice_end = "16" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_16_16
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_16_16
+       (.A(a[6:0]),
         .D(d[16]),
-        .O(spo[16]),
+        .DPO(ram_reg_128_255_16_16_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_16_16_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "17" *) 
   (* ram_slice_end = "17" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_17_17
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_17_17
+       (.A(a[6:0]),
         .D(d[17]),
-        .O(spo[17]),
+        .DPO(ram_reg_128_255_17_17_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_17_17_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "18" *) 
   (* ram_slice_end = "18" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_18_18
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_18_18
+       (.A(a[6:0]),
         .D(d[18]),
-        .O(spo[18]),
+        .DPO(ram_reg_128_255_18_18_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_18_18_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "19" *) 
   (* ram_slice_end = "19" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_19_19
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_19_19
+       (.A(a[6:0]),
         .D(d[19]),
-        .O(spo[19]),
+        .DPO(ram_reg_128_255_19_19_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_19_19_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "1" *) 
   (* ram_slice_end = "1" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_1_1
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_1_1
+       (.A(a[6:0]),
         .D(d[1]),
-        .O(spo[1]),
+        .DPO(ram_reg_128_255_1_1_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_1_1_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "20" *) 
   (* ram_slice_end = "20" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_20_20
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_20_20
+       (.A(a[6:0]),
         .D(d[20]),
-        .O(spo[20]),
+        .DPO(ram_reg_128_255_20_20_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_20_20_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "21" *) 
   (* ram_slice_end = "21" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_21_21
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_21_21
+       (.A(a[6:0]),
         .D(d[21]),
-        .O(spo[21]),
+        .DPO(ram_reg_128_255_21_21_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_21_21_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "22" *) 
   (* ram_slice_end = "22" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_22_22
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_22_22
+       (.A(a[6:0]),
         .D(d[22]),
-        .O(spo[22]),
+        .DPO(ram_reg_128_255_22_22_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_22_22_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "23" *) 
   (* ram_slice_end = "23" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_23_23
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_23_23
+       (.A(a[6:0]),
         .D(d[23]),
-        .O(spo[23]),
+        .DPO(ram_reg_128_255_23_23_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_23_23_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "24" *) 
   (* ram_slice_end = "24" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_24_24
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_24_24
+       (.A(a[6:0]),
         .D(d[24]),
-        .O(spo[24]),
+        .DPO(ram_reg_128_255_24_24_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_24_24_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "25" *) 
   (* ram_slice_end = "25" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_25_25
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_25_25
+       (.A(a[6:0]),
         .D(d[25]),
-        .O(spo[25]),
+        .DPO(ram_reg_128_255_25_25_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_25_25_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "26" *) 
   (* ram_slice_end = "26" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_26_26
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_26_26
+       (.A(a[6:0]),
         .D(d[26]),
-        .O(spo[26]),
+        .DPO(ram_reg_128_255_26_26_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_26_26_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "27" *) 
   (* ram_slice_end = "27" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_27_27
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_27_27
+       (.A(a[6:0]),
         .D(d[27]),
-        .O(spo[27]),
+        .DPO(ram_reg_128_255_27_27_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_27_27_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "28" *) 
   (* ram_slice_end = "28" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_28_28
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_28_28
+       (.A(a[6:0]),
         .D(d[28]),
-        .O(spo[28]),
+        .DPO(ram_reg_128_255_28_28_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_28_28_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "29" *) 
   (* ram_slice_end = "29" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_29_29
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_29_29
+       (.A(a[6:0]),
         .D(d[29]),
-        .O(spo[29]),
+        .DPO(ram_reg_128_255_29_29_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_29_29_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "2" *) 
   (* ram_slice_end = "2" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_2_2
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_2_2
+       (.A(a[6:0]),
         .D(d[2]),
-        .O(spo[2]),
+        .DPO(ram_reg_128_255_2_2_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_2_2_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "30" *) 
   (* ram_slice_end = "30" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_30_30
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_30_30
+       (.A(a[6:0]),
         .D(d[30]),
-        .O(spo[30]),
+        .DPO(ram_reg_128_255_30_30_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_30_30_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "31" *) 
   (* ram_slice_end = "31" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_31_31
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_31_31
+       (.A(a[6:0]),
         .D(d[31]),
-        .O(spo[31]),
+        .DPO(ram_reg_128_255_31_31_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_31_31_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "3" *) 
   (* ram_slice_end = "3" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_3_3
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_3_3
+       (.A(a[6:0]),
         .D(d[3]),
-        .O(spo[3]),
+        .DPO(ram_reg_128_255_3_3_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_3_3_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "4" *) 
   (* ram_slice_end = "4" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_4_4
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_4_4
+       (.A(a[6:0]),
         .D(d[4]),
-        .O(spo[4]),
+        .DPO(ram_reg_128_255_4_4_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_4_4_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "5" *) 
   (* ram_slice_end = "5" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_5_5
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_5_5
+       (.A(a[6:0]),
         .D(d[5]),
-        .O(spo[5]),
+        .DPO(ram_reg_128_255_5_5_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_5_5_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "6" *) 
   (* ram_slice_end = "6" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_6_6
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_6_6
+       (.A(a[6:0]),
         .D(d[6]),
-        .O(spo[6]),
+        .DPO(ram_reg_128_255_6_6_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_6_6_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "7" *) 
   (* ram_slice_end = "7" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_7_7
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_7_7
+       (.A(a[6:0]),
         .D(d[7]),
-        .O(spo[7]),
+        .DPO(ram_reg_128_255_7_7_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_7_7_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "8" *) 
   (* ram_slice_end = "8" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_8_8
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_8_8
+       (.A(a[6:0]),
         .D(d[8]),
-        .O(spo[8]),
+        .DPO(ram_reg_128_255_8_8_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_8_8_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* METHODOLOGY_DRC_VIOS = "{SYNTH-5 {cell *THIS*}}" *) 
   (* RTL_RAM_BITS = "8192" *) 
-  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_sp_ram.spram_inst/ram" *) 
-  (* RTL_RAM_TYPE = "RAM_SP" *) 
-  (* ram_addr_begin = "0" *) 
+  (* RTL_RAM_NAME = "synth_options.dist_mem_inst/gen_dp_ram.dpram_inst/ram" *) 
+  (* RTL_RAM_TYPE = "RAM_TDP" *) 
+  (* ram_addr_begin = "128" *) 
   (* ram_addr_end = "255" *) 
   (* ram_offset = "0" *) 
   (* ram_slice_begin = "9" *) 
   (* ram_slice_end = "9" *) 
-  RAM256X1S #(
-    .INIT(256'h0000000000000000000000000000000000000000000000000000000000000000)) 
-    ram_reg_0_255_9_9
-       (.A(a),
+  RAM128X1D #(
+    .INIT(128'h00000000000000000000000000000000)) 
+    ram_reg_128_255_9_9
+       (.A(a[6:0]),
         .D(d[9]),
-        .O(spo[9]),
+        .DPO(ram_reg_128_255_9_9_n_0),
+        .DPRA(dpra[6:0]),
+        .SPO(ram_reg_128_255_9_9_n_1),
         .WCLK(clk),
-        .WE(we));
+        .WE(ram_reg_128_255_0_0_i_1_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[0]_INST_0 
+       (.I0(ram_reg_128_255_0_0_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_0_0_n_1),
+        .O(spo[0]));
+  (* SOFT_HLUTNM = "soft_lutpair10" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[10]_INST_0 
+       (.I0(ram_reg_128_255_10_10_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_10_10_n_1),
+        .O(spo[10]));
+  (* SOFT_HLUTNM = "soft_lutpair10" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[11]_INST_0 
+       (.I0(ram_reg_128_255_11_11_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_11_11_n_1),
+        .O(spo[11]));
+  (* SOFT_HLUTNM = "soft_lutpair12" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[12]_INST_0 
+       (.I0(ram_reg_128_255_12_12_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_12_12_n_1),
+        .O(spo[12]));
+  (* SOFT_HLUTNM = "soft_lutpair12" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[13]_INST_0 
+       (.I0(ram_reg_128_255_13_13_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_13_13_n_1),
+        .O(spo[13]));
+  (* SOFT_HLUTNM = "soft_lutpair14" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[14]_INST_0 
+       (.I0(ram_reg_128_255_14_14_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_14_14_n_1),
+        .O(spo[14]));
+  (* SOFT_HLUTNM = "soft_lutpair14" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[15]_INST_0 
+       (.I0(ram_reg_128_255_15_15_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_15_15_n_1),
+        .O(spo[15]));
+  (* SOFT_HLUTNM = "soft_lutpair16" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[16]_INST_0 
+       (.I0(ram_reg_128_255_16_16_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_16_16_n_1),
+        .O(spo[16]));
+  (* SOFT_HLUTNM = "soft_lutpair16" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[17]_INST_0 
+       (.I0(ram_reg_128_255_17_17_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_17_17_n_1),
+        .O(spo[17]));
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[18]_INST_0 
+       (.I0(ram_reg_128_255_18_18_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_18_18_n_1),
+        .O(spo[18]));
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[19]_INST_0 
+       (.I0(ram_reg_128_255_19_19_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_19_19_n_1),
+        .O(spo[19]));
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[1]_INST_0 
+       (.I0(ram_reg_128_255_1_1_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_1_1_n_1),
+        .O(spo[1]));
+  (* SOFT_HLUTNM = "soft_lutpair20" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[20]_INST_0 
+       (.I0(ram_reg_128_255_20_20_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_20_20_n_1),
+        .O(spo[20]));
+  (* SOFT_HLUTNM = "soft_lutpair20" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[21]_INST_0 
+       (.I0(ram_reg_128_255_21_21_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_21_21_n_1),
+        .O(spo[21]));
+  (* SOFT_HLUTNM = "soft_lutpair22" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[22]_INST_0 
+       (.I0(ram_reg_128_255_22_22_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_22_22_n_1),
+        .O(spo[22]));
+  (* SOFT_HLUTNM = "soft_lutpair22" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[23]_INST_0 
+       (.I0(ram_reg_128_255_23_23_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_23_23_n_1),
+        .O(spo[23]));
+  (* SOFT_HLUTNM = "soft_lutpair24" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[24]_INST_0 
+       (.I0(ram_reg_128_255_24_24_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_24_24_n_1),
+        .O(spo[24]));
+  (* SOFT_HLUTNM = "soft_lutpair24" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[25]_INST_0 
+       (.I0(ram_reg_128_255_25_25_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_25_25_n_1),
+        .O(spo[25]));
+  (* SOFT_HLUTNM = "soft_lutpair26" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[26]_INST_0 
+       (.I0(ram_reg_128_255_26_26_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_26_26_n_1),
+        .O(spo[26]));
+  (* SOFT_HLUTNM = "soft_lutpair26" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[27]_INST_0 
+       (.I0(ram_reg_128_255_27_27_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_27_27_n_1),
+        .O(spo[27]));
+  (* SOFT_HLUTNM = "soft_lutpair28" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[28]_INST_0 
+       (.I0(ram_reg_128_255_28_28_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_28_28_n_1),
+        .O(spo[28]));
+  (* SOFT_HLUTNM = "soft_lutpair28" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[29]_INST_0 
+       (.I0(ram_reg_128_255_29_29_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_29_29_n_1),
+        .O(spo[29]));
+  (* SOFT_HLUTNM = "soft_lutpair2" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[2]_INST_0 
+       (.I0(ram_reg_128_255_2_2_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_2_2_n_1),
+        .O(spo[2]));
+  (* SOFT_HLUTNM = "soft_lutpair30" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[30]_INST_0 
+       (.I0(ram_reg_128_255_30_30_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_30_30_n_1),
+        .O(spo[30]));
+  (* SOFT_HLUTNM = "soft_lutpair30" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[31]_INST_0 
+       (.I0(ram_reg_128_255_31_31_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_31_31_n_1),
+        .O(spo[31]));
+  (* SOFT_HLUTNM = "soft_lutpair2" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[3]_INST_0 
+       (.I0(ram_reg_128_255_3_3_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_3_3_n_1),
+        .O(spo[3]));
+  (* SOFT_HLUTNM = "soft_lutpair4" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[4]_INST_0 
+       (.I0(ram_reg_128_255_4_4_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_4_4_n_1),
+        .O(spo[4]));
+  (* SOFT_HLUTNM = "soft_lutpair4" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[5]_INST_0 
+       (.I0(ram_reg_128_255_5_5_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_5_5_n_1),
+        .O(spo[5]));
+  (* SOFT_HLUTNM = "soft_lutpair6" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[6]_INST_0 
+       (.I0(ram_reg_128_255_6_6_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_6_6_n_1),
+        .O(spo[6]));
+  (* SOFT_HLUTNM = "soft_lutpair6" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[7]_INST_0 
+       (.I0(ram_reg_128_255_7_7_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_7_7_n_1),
+        .O(spo[7]));
+  (* SOFT_HLUTNM = "soft_lutpair8" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[8]_INST_0 
+       (.I0(ram_reg_128_255_8_8_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_8_8_n_1),
+        .O(spo[8]));
+  (* SOFT_HLUTNM = "soft_lutpair8" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \spo[9]_INST_0 
+       (.I0(ram_reg_128_255_9_9_n_1),
+        .I1(a[7]),
+        .I2(ram_reg_0_127_9_9_n_1),
+        .O(spo[9]));
 endmodule
 `ifndef GLBL
 `define GLBL

@@ -1,7 +1,7 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-// Date        : Sat May  1 13:21:54 2021
+// Date        : Thu May  6 11:54:13 2021
 // Host        : TAPLOP running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub {d:/USTC/21spring books/Computer
 //               Organization/cod2021sp/lab4/sscpu_vivado/sscpu_vivado.srcs/sources_1/ip/inst_mem/inst_mem_stub.v}
