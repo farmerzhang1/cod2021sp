@@ -1,4 +1,4 @@
-package SingleCycle
+package CPU
 
 import chisel3.util.BitPat
 

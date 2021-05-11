@@ -1,4 +1,4 @@
-package SingleCycle
+package CPU
 import chisel3._
 import chisel3.util._
 import Control._
