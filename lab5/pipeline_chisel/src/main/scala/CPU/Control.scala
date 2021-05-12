@@ -63,14 +63,11 @@ class ControlSignals extends Bundle {
     val inst = Input(UInt(32.W))
     val imm_sel = Output(UInt(3.W))
     val br_sel = Output(UInt(1.W)) // branch is here? (it needs to be AND-ed with the zero flag of ALU)
-    // val mem_read = Output(Bool()) // you useless thing!
-    // val mem2reg = Output(Bool()) // 这个control只控制内存和alu的输出，都没有考虑jal/jalr的情况，不弄你了啦
     val mem_write = Output(Bool())
     val a_sel = Output(UInt(2.W))
     val b_sel = Output(UInt(2.W))
     val alu_op = Output(UInt(3.W))
     val pc_sel = Output(UInt(2.W))
-    // val alu_src = Output(Bool())
     val reg_write = Output(Bool())
     val wb_sel = Output(UInt(2.W))
 }
@@ -81,7 +78,6 @@ class Control extends Module {
     val pc_sel :: imm_sel :: alu_op :: a_sel :: b_sel :: br_sel :: store_sel :: load_sel :: wb_sel :: wen :: Nil = ListLookup(io.inst, default, table)
     io.br_sel := br_sel
     io.imm_sel := imm_sel
-    // io.mem_read := load_sel =/= LD_XXX
     io.mem_write := store_sel =/= ST_XXX
     io.alu_op := alu_op
     io.reg_write := wen

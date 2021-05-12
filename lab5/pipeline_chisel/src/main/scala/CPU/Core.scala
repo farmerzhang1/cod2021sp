@@ -16,7 +16,6 @@ class CPU extends Module {
     datapath.io.ctrl <> ctrl.io
     datapath.io.dmem <> dmem.io
     datapath.io.imem <> imem.io
-    // datapath.io.clock <> io.clock
     datapath.io.io_bus <> io.io_bus
     datapath.io.debug_bus <> io.debug_bus
 }

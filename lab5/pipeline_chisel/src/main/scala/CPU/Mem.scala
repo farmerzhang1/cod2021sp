@@ -24,7 +24,7 @@ import chisel3.experimental._
 class DMemIO extends Bundle {
     val a = Input(UInt(8.W)) // IO names will be the same
     val d = Input(UInt(32.W))  // (without 'io_' in prefix)
-    // val clk = Input(Clock()) //
+    // val clk = Input(Clock()) // remember to add the clock in verilog!
     val dpra = Input(UInt(8.W))
     val we = Input(Bool())
     val dpo = Output(UInt(32.W))
