@@ -91,21 +91,24 @@ class ControlSignals extends Bundle {
     // val wb_sel = Output(UInt(2.W))
     val id = Output(new ID)
     val ex = Output(new EX)
-    val MEM = Output(new MEM)
-    val WB = Output(new WB)
+    val mem = Output(new MEM)
+    val wb = Output(new WB)
 }
 
 class Control extends Module {
     import Control._
     val io = IO (new ControlSignals)
     val pc_sel :: imm_sel :: alu_op :: a_sel :: b_sel :: br_sel :: store_sel :: load_sel :: wb_sel :: wen :: Nil = ListLookup(io.inst, default, table)
-    io.br_sel := br_sel
-    io.imm_sel := imm_sel
-    io.mem_write := store_sel =/= ST_XXX
-    io.alu_op := alu_op
-    io.reg_write := wen
-    io.pc_sel := pc_sel
-    io.a_sel := a_sel
-    io.b_sel := b_sel
-    io.wb_sel := wb_sel
+    io.id.br_sel := br_sel
+    io.id.imm_sel := imm_sel
+    io.id.pc_sel := pc_sel
+
+    io.ex.alu_op := alu_op
+    io.ex.a_sel := a_sel
+    io.ex.b_sel := b_sel
+
+    io.mem.mem_write := store_sel =/= ST_XXX
+
+    io.wb.wb_sel := wb_sel
+    io.wb.reg_write := wen
 }
