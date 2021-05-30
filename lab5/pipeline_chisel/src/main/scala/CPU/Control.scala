@@ -58,18 +58,41 @@ object Control {
         JAL  -> List(PC_JMP, IMM_J, ALU_ADD, A_PC , B_RS2, BR_XXX, ST_XXX, LD_XXX, WB_PC4, Y)
     )
 }
-
+// try to classify the control signals of the five stages
+class IF extends Bundle {
+}
+class ID extends Bundle {
+    val imm_sel = UInt(3.W)
+    val br_sel = UInt(1.W)
+    val pc_sel = UInt(2.W)
+}
+class EX extends Bundle {
+    val a_sel = UInt(2.W)
+    val b_sel = UInt(2.W)
+    val alu_op = UInt(3.W)
+}
+class MEM extends Bundle {
+    val mem_write = Bool()
+}
+class WB extends Bundle {
+    val wb_sel = UInt(2.W)
+    val reg_write = Bool()
+}
 class ControlSignals extends Bundle {
     val inst = Input(UInt(32.W))
-    val imm_sel = Output(UInt(3.W))
-    val br_sel = Output(UInt(1.W)) // branch is here? (it needs to be AND-ed with the zero flag of ALU)
-    val mem_write = Output(Bool())
-    val a_sel = Output(UInt(2.W))
-    val b_sel = Output(UInt(2.W))
-    val alu_op = Output(UInt(3.W))
-    val pc_sel = Output(UInt(2.W))
-    val reg_write = Output(Bool())
-    val wb_sel = Output(UInt(2.W))
+    // val imm_sel = Output(UInt(3.W))
+    // val br_sel = Output(UInt(1.W))
+    // val mem_write = Output(Bool())
+    // val a_sel = Output(UInt(2.W))
+    // val b_sel = Output(UInt(2.W))
+    // val alu_op = Output(UInt(3.W))
+    // val pc_sel = Output(UInt(2.W))
+    // val reg_write = Output(Bool())
+    // val wb_sel = Output(UInt(2.W))
+    val id = Output(new ID)
+    val ex = Output(new EX)
+    val MEM = Output(new MEM)
+    val WB = Output(new WB)
 }
 
 class Control extends Module {
