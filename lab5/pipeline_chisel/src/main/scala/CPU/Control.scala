@@ -63,13 +63,13 @@ class IF extends Bundle {
 }
 class ID extends Bundle {
     val imm_sel = UInt(3.W)
-    val br_sel = UInt(1.W)
-    val pc_sel = UInt(2.W)
 }
 class EX extends Bundle {
     val a_sel = UInt(2.W)
     val b_sel = UInt(2.W)
     val alu_op = UInt(3.W)
+    val br_sel = UInt(1.W) // 判定是否 branch 需要 alu 的结果
+    val pc_sel = UInt(2.W) // 放在一起好了，感觉这样好处理一点
 }
 class MEM extends Bundle {
     val mem_write = Bool()

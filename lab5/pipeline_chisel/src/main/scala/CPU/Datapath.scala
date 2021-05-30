@@ -31,18 +31,43 @@ class DataPath extends Module {
     val brcond  = Module (new BrCond)
     import Const._
     val pc = RegInit(PC_START.U(32.W))
-    io.io_bus.io_addr := alu.io.res(7, 0)
-    io.io_bus.io_dout := regfile.io.read_data2
-    io.io_bus.io_we := alu.io.res(10) && io.ctrl.mem_write
-    io.imem.a := pc(9, 2) // 这里不太好说清楚 (我们通常读的是byte,但是这里一个地址就可以读出来指令)
+    val stall = Reg(Bool()) // THE stall!
+    /************ IF / ID ********************************/
+    val inst = RegInit(NOP.U(32.W)) // TODO: add NOP instruction
+    val pc_ifid = Reg(UInt(32.W))
+
+    /************ ID / EX ********************************/
+    val pc_idex = RegInit(NOP.U(32.W))
+    val a = Reg(UInt(32.W))
+    val b = Reg(UInt(32.W))
+    val imm = Reg(UInt(32.W))
+    val dest_reg = Reg(UInt(5.W))
+    val id = Wire(ctrl.io.id)
+    val ex = RegNext(ctrl.io.ex)
+    /************ EX / MEM *******************************/
+    // TODO: I'm hungry, bye!
+    val mem = RegNext(RegNext(ctrl.io.mem))
+    val alu_out = RegNext(alu.io.res)
+    val dest_reg_mem = RegNext(dest_reg)
+    val dmem_data = RegNext(b)
+    /************ MEM / WB *******************************/
+    // TODO
+    val read_data = RegNext(io.dmem.dpo)
+    val wb = RegNext(RegNext(RegNext(ctrl.io.wb)))
+    val alu_out_wb = RegNext(alu_out)
+    val dest_reg_wb = RegNext(dest_reg_mem)
+
+    // the single cycle one (not changed)
     io.ctrl.inst := inst
+    io.imem.a := pc(9, 2) // 这里不太好说清楚 (我们通常读的是byte,但是这里一个地址就可以读出来指令)
     io.dmem.a := alu.io.res(7, 0)
     io.dmem.dpra := io.debug_bus.mem_rf_addr // additional port, for debug
     io.dmem.d := regfile.io.read_data2
-    io.dmem.we := io.ctrl.mem_write && !alu.io.res(10)
-    pc := Mux (io.ctrl.pc_sel === PC_JMP || brcond.io.taken,
+    io.dmem.we := mem.mem_write && !alu.io.res(10)
+
+    pc := Mux(stall, pc, Mux (io.ctrl.pc_sel === PC_JMP || brcond.io.taken,
         alu.io.res,
-        pc + 4.U)
+        pc + 4.U))
 
     alu.io.a := Mux(io.ctrl.a_sel === A_PC, pc, regfile.io.read_data1)
     alu.io.b := Mux(io.ctrl.b_sel === B_RS2, regfile.io.read_data2, immgen.io.imm)
@@ -52,12 +77,16 @@ class DataPath extends Module {
     regfile.io.read_addr2 := inst(24, 20)
     regfile.io.read_addr_debug := io.debug_bus.mem_rf_addr(4, 0)
     regfile.io.write_addr := inst(11, 7)
-    regfile.io.write_en := io.ctrl.reg_write
-    regfile.io.write_data := MuxLookup (io.ctrl.wb_sel, 0.U, Seq (
-        WB_ALU -> alu.io.res,
-        WB_MEM -> (Mux(alu.io.res(10), io.io_bus.io_din,io.dmem.spo)),
+    regfile.io.write_en := wb.reg_write
+    regfile.io.write_data := MuxLookup (wb.wb_sel, 0.U, Seq (
+        WB_ALU -> RegNext(RegNext(alu.io.res)),
+        WB_MEM -> (Mux(alu.io.res(10), io.io_bus.io_din, io.dmem.spo)),
         WB_PC4 -> (pc + 4.U)
     ))
+
+    io.io_bus.io_addr := alu.io.res(7, 0)
+    io.io_bus.io_dout := regfile.io.read_data2
+    io.io_bus.io_we := alu.io.res(10) && io.ctrl.mem_write
     io.debug_bus.rf_data := regfile.io.read_data_debug
     io.debug_bus.mem_data := io.dmem.dpo
     io.debug_bus.pc := pc
