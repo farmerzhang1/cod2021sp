@@ -99,13 +99,13 @@ class Control extends Module {
     import Control._
     val io = IO (new ControlSignals)
     val pc_sel :: imm_sel :: alu_op :: a_sel :: b_sel :: br_sel :: store_sel :: load_sel :: wb_sel :: wen :: Nil = ListLookup(io.inst, default, table)
-    io.id.br_sel := br_sel
     io.id.imm_sel := imm_sel
-    io.id.pc_sel := pc_sel
 
     io.ex.alu_op := alu_op
     io.ex.a_sel := a_sel
     io.ex.b_sel := b_sel
+    io.ex.br_sel := br_sel
+    io.ex.pc_sel := pc_sel
 
     io.mem.mem_write := store_sel =/= ST_XXX
 

@@ -2,7 +2,7 @@ package CPU
 import chisel3._
 import chisel3.util._
 import Control._
-
+import Instructions._
 object Const {
     val PC_START = 0x3000 // 0x3000 = 0b11_00"00_0000_00"00
     val LED40 = 0x400 // 0x400 = 0b100_0000_0000
@@ -33,27 +33,25 @@ class DataPath extends Module {
     val pc = RegInit(PC_START.U(32.W))
     val stall = Reg(Bool()) // THE stall!
     /************ IF / ID ********************************/
-    val inst = RegInit(NOP.U(32.W)) // TODO: add NOP instruction
+    val inst_ifid = RegInit(0.U(32.W)) // TODO: add NOP instruction
     val pc_ifid = Reg(UInt(32.W))
 
     /************ ID / EX ********************************/
-    val pc_idex = RegInit(NOP.U(32.W))
+    val pc_idex = RegInit(0.U(32.W))
     val a = Reg(UInt(32.W))
     val b = Reg(UInt(32.W))
     val imm = Reg(UInt(32.W))
     val dest_reg = Reg(UInt(5.W))
-    val id = Wire(ctrl.io.id)
-    val ex = RegNext(ctrl.io.ex)
+    val id = io.ctrl.id
+    val ex = RegNext(io.ctrl.ex)
     /************ EX / MEM *******************************/
-    // TODO: I'm hungry, bye!
-    val mem = RegNext(RegNext(ctrl.io.mem))
+    val mem = RegNext(RegNext(io.ctrl.mem))
     val alu_out = RegNext(alu.io.res)
     val dest_reg_mem = RegNext(dest_reg)
     val dmem_data = RegNext(b)
     /************ MEM / WB *******************************/
-    // TODO
     val read_data = RegNext(io.dmem.dpo)
-    val wb = RegNext(RegNext(RegNext(ctrl.io.wb)))
+    val wb = RegNext(RegNext(RegNext(io.ctrl.wb)))
     val alu_out_wb = RegNext(alu_out)
     val dest_reg_wb = RegNext(dest_reg_mem)
 
@@ -65,13 +63,13 @@ class DataPath extends Module {
     io.dmem.d := regfile.io.read_data2
     io.dmem.we := mem.mem_write && !alu.io.res(10)
 
-    pc := Mux(stall, pc, Mux (io.ctrl.pc_sel === PC_JMP || brcond.io.taken,
+    pc := Mux(stall, pc, Mux (io.ctrl.ex.pc_sel === PC_JMP || brcond.io.taken,
         alu.io.res,
         pc + 4.U))
 
-    alu.io.a := Mux(io.ctrl.a_sel === A_PC, pc, regfile.io.read_data1)
-    alu.io.b := Mux(io.ctrl.b_sel === B_RS2, regfile.io.read_data2, immgen.io.imm)
-    alu.io.op := io.ctrl.alu_op
+    alu.io.a := Mux(io.ctrl.ex.a_sel === A_PC, pc, regfile.io.read_data1)
+    alu.io.b := Mux(io.ctrl.ex.b_sel === B_RS2, regfile.io.read_data2, immgen.io.imm)
+    alu.io.op := io.ctrl.ex.alu_op
 
     regfile.io.read_addr1 := inst(19, 15)
     regfile.io.read_addr2 := inst(24, 20)
@@ -86,13 +84,13 @@ class DataPath extends Module {
 
     io.io_bus.io_addr := alu.io.res(7, 0)
     io.io_bus.io_dout := regfile.io.read_data2
-    io.io_bus.io_we := alu.io.res(10) && io.ctrl.mem_write
+    io.io_bus.io_we := alu.io.res(10) && io.ctrl.mem.mem_write
     io.debug_bus.rf_data := regfile.io.read_data_debug
     io.debug_bus.mem_data := io.dmem.dpo
     io.debug_bus.pc := pc
     immgen.io.inst := inst
-    immgen.io.sel := io.ctrl.imm_sel
+    immgen.io.sel := io.ctrl.id.imm_sel
     brcond.io.res := alu.io.res
     brcond.io.z := alu.io.z
-    brcond.io.sel := io.ctrl.br_sel
+    brcond.io.sel := io.ctrl.ex.br_sel
 }
