@@ -595,6 +595,26 @@ module DataPath(
   reg [31:0] _RAND_8;
   reg [31:0] _RAND_9;
   reg [31:0] _RAND_10;
+  reg [31:0] _RAND_11;
+  reg [31:0] _RAND_12;
+  reg [31:0] _RAND_13;
+  reg [31:0] _RAND_14;
+  reg [31:0] _RAND_15;
+  reg [31:0] _RAND_16;
+  reg [31:0] _RAND_17;
+  reg [31:0] _RAND_18;
+  reg [31:0] _RAND_19;
+  reg [31:0] _RAND_20;
+  reg [31:0] _RAND_21;
+  reg [31:0] _RAND_22;
+  reg [31:0] _RAND_23;
+  reg [31:0] _RAND_24;
+  reg [31:0] _RAND_25;
+  reg [31:0] _RAND_26;
+  reg [31:0] _RAND_27;
+  reg [31:0] _RAND_28;
+  reg [31:0] _RAND_29;
+  reg [31:0] _RAND_30;
 `endif // RANDOMIZE_REG_INIT
   wire  regfile_clock; // @[Datapath.scala 28:26]
   wire  regfile_reset; // @[Datapath.scala 28:26]
@@ -619,19 +639,40 @@ module DataPath(
   wire  brcond_io_sel; // @[Datapath.scala 31:26]
   wire  brcond_io_taken; // @[Datapath.scala 31:26]
   reg [31:0] pc; // @[Datapath.scala 33:21]
-  reg  mem_REG_mem_write; // @[Datapath.scala 48:30]
-  reg  mem_mem_write; // @[Datapath.scala 48:22]
-  reg [1:0] wb_REG_wb_sel; // @[Datapath.scala 54:37]
-  reg  wb_REG_reg_write; // @[Datapath.scala 54:37]
-  reg [1:0] wb_REG_1_wb_sel; // @[Datapath.scala 54:29]
-  reg  wb_REG_1_reg_write; // @[Datapath.scala 54:29]
-  reg [1:0] wb_wb_sel; // @[Datapath.scala 54:21]
-  reg  wb_reg_write; // @[Datapath.scala 54:21]
-  wire [31:0] _pc_T_3 = pc + 32'h4; // @[Datapath.scala 68:12]
-  reg [31:0] regfile_io_write_data_REG; // @[Datapath.scala 80:34]
-  reg [31:0] regfile_io_write_data_REG_1; // @[Datapath.scala 80:26]
-  wire [31:0] _regfile_io_write_data_T_1 = alu_io_res[10] ? io_io_bus_io_din : io_dmem_spo; // @[Datapath.scala 81:23]
-  wire [31:0] _regfile_io_write_data_T_5 = 2'h1 == wb_wb_sel ? regfile_io_write_data_REG_1 : 32'h0; // @[Mux.scala 80:57]
+  reg [31:0] inst; // @[Datapath.scala 36:23]
+  reg [31:0] pc_id; // @[Datapath.scala 37:24]
+  reg [31:0] pc_ex; // @[Datapath.scala 40:24]
+  reg [31:0] a; // @[Datapath.scala 41:16]
+  reg [31:0] b; // @[Datapath.scala 42:16]
+  reg [31:0] imm; // @[Datapath.scala 43:22]
+  reg [4:0] dest_reg; // @[Datapath.scala 44:27]
+  reg [1:0] ex_a_sel; // @[Datapath.scala 46:21]
+  reg [1:0] ex_b_sel; // @[Datapath.scala 46:21]
+  reg [2:0] ex_alu_op; // @[Datapath.scala 46:21]
+  reg  ex_br_sel; // @[Datapath.scala 46:21]
+  reg  mem_REG_mem_write; // @[Datapath.scala 49:30]
+  reg  mem_mem_write; // @[Datapath.scala 49:22]
+  reg [31:0] pc_mem; // @[Datapath.scala 50:25]
+  reg [31:0] alu_out_mem; // @[Datapath.scala 51:30]
+  reg [4:0] dest_reg_mem; // @[Datapath.scala 52:31]
+  reg [31:0] pc_wb; // @[Datapath.scala 55:24]
+  reg [1:0] wb_REG_wb_sel; // @[Datapath.scala 57:37]
+  reg  wb_REG_reg_write; // @[Datapath.scala 57:37]
+  reg [1:0] wb_REG_1_wb_sel; // @[Datapath.scala 57:29]
+  reg  wb_REG_1_reg_write; // @[Datapath.scala 57:29]
+  reg [1:0] wb_wb_sel; // @[Datapath.scala 57:21]
+  reg  wb_reg_write; // @[Datapath.scala 57:21]
+  reg [31:0] alu_out_wb; // @[Datapath.scala 58:29]
+  reg [4:0] dest_reg_wb; // @[Datapath.scala 59:30]
+  wire [31:0] _pc_T_3 = pc + 32'h4; // @[Datapath.scala 65:12]
+  reg [31:0] a_REG; // @[Datapath.scala 76:47]
+  reg [31:0] b_REG; // @[Datapath.scala 77:41]
+  reg [31:0] io_dmem_d_REG; // @[Datapath.scala 88:33]
+  reg [31:0] io_dmem_d_REG_1; // @[Datapath.scala 88:25]
+  reg [31:0] regfile_io_write_data_REG; // @[Datapath.scala 96:64]
+  wire [31:0] _regfile_io_write_data_T_1 = alu_out_wb[10] ? io_io_bus_io_din : regfile_io_write_data_REG; // @[Datapath.scala 96:22]
+  wire [31:0] _regfile_io_write_data_T_3 = pc_wb + 32'h4; // @[Datapath.scala 97:26]
+  wire [31:0] _regfile_io_write_data_T_5 = 2'h1 == wb_wb_sel ? alu_out_wb : 32'h0; // @[Mux.scala 80:57]
   wire [31:0] _regfile_io_write_data_T_7 = 2'h2 == wb_wb_sel ? _regfile_io_write_data_T_1 : _regfile_io_write_data_T_5; // @[Mux.scala 80:57]
   RegFile regfile ( // @[Datapath.scala 28:26]
     .clock(regfile_clock),
@@ -663,51 +704,79 @@ module DataPath(
     .io_sel(brcond_io_sel),
     .io_taken(brcond_io_taken)
   );
-  assign io_ctrl_inst = io_imem_spo; // @[Datapath.scala 59:18]
-  assign io_dmem_a = alu_io_res[7:0]; // @[Datapath.scala 61:28]
-  assign io_dmem_d = regfile_io_read_data2; // @[Datapath.scala 63:15]
-  assign io_dmem_dpra = io_debug_bus_mem_rf_addr; // @[Datapath.scala 62:18]
-  assign io_dmem_we = mem_mem_write & ~alu_io_res[10]; // @[Datapath.scala 64:33]
-  assign io_imem_a = pc[9:2]; // @[Datapath.scala 60:20]
-  assign io_io_bus_io_addr = alu_io_res[7:0]; // @[Datapath.scala 85:36]
-  assign io_io_bus_io_dout = regfile_io_read_data2; // @[Datapath.scala 86:23]
-  assign io_io_bus_io_we = alu_io_res[10] & io_ctrl_mem_mem_write; // @[Datapath.scala 87:39]
-  assign io_debug_bus_rf_data = regfile_io_read_data_debug; // @[Datapath.scala 88:26]
-  assign io_debug_bus_mem_data = io_dmem_dpo; // @[Datapath.scala 89:27]
-  assign io_debug_bus_pc = pc; // @[Datapath.scala 90:21]
+  assign io_ctrl_inst = inst; // @[Datapath.scala 68:18]
+  assign io_dmem_a = alu_out_mem[7:0]; // @[Datapath.scala 86:29]
+  assign io_dmem_d = io_dmem_d_REG_1; // @[Datapath.scala 88:15]
+  assign io_dmem_dpra = io_debug_bus_mem_rf_addr; // @[Datapath.scala 87:18]
+  assign io_dmem_we = mem_mem_write & ~alu_out_mem[10]; // @[Datapath.scala 89:33]
+  assign io_imem_a = pc[9:2]; // @[Datapath.scala 62:20]
+  assign io_io_bus_io_addr = alu_io_res[7:0]; // @[Datapath.scala 100:36]
+  assign io_io_bus_io_dout = regfile_io_read_data2; // @[Datapath.scala 101:23]
+  assign io_io_bus_io_we = alu_io_res[10] & io_ctrl_mem_mem_write; // @[Datapath.scala 102:39]
+  assign io_debug_bus_rf_data = regfile_io_read_data_debug; // @[Datapath.scala 103:26]
+  assign io_debug_bus_mem_data = io_dmem_dpo; // @[Datapath.scala 104:27]
+  assign io_debug_bus_pc = pc; // @[Datapath.scala 105:21]
   assign regfile_clock = clock;
   assign regfile_reset = reset;
-  assign regfile_io_read_addr1 = io_imem_spo[19:15]; // @[Datapath.scala 74:34]
-  assign regfile_io_read_addr2 = io_imem_spo[24:20]; // @[Datapath.scala 75:34]
-  assign regfile_io_read_addr_debug = io_debug_bus_mem_rf_addr[4:0]; // @[Datapath.scala 76:59]
-  assign regfile_io_write_addr = io_imem_spo[11:7]; // @[Datapath.scala 77:34]
-  assign regfile_io_write_en = wb_reg_write; // @[Datapath.scala 78:25]
-  assign regfile_io_write_data = 2'h3 == wb_wb_sel ? _pc_T_3 : _regfile_io_write_data_T_7; // @[Mux.scala 80:57]
-  assign alu_io_a = io_ctrl_ex_a_sel == 2'h3 ? pc : regfile_io_read_data1; // @[Datapath.scala 70:20]
-  assign alu_io_b = io_ctrl_ex_b_sel == 2'h1 ? regfile_io_read_data2 : immgen_io_imm; // @[Datapath.scala 71:20]
-  assign alu_io_op = io_ctrl_ex_alu_op; // @[Datapath.scala 72:15]
-  assign immgen_io_inst = io_imem_spo; // @[Datapath.scala 91:20]
-  assign immgen_io_sel = io_ctrl_id_imm_sel; // @[Datapath.scala 92:19]
-  assign brcond_io_z = alu_io_z; // @[Datapath.scala 94:17]
-  assign brcond_io_sel = io_ctrl_ex_br_sel; // @[Datapath.scala 95:19]
+  assign regfile_io_read_addr1 = inst[19:15]; // @[Datapath.scala 69:34]
+  assign regfile_io_read_addr2 = inst[24:20]; // @[Datapath.scala 70:34]
+  assign regfile_io_read_addr_debug = io_debug_bus_mem_rf_addr[4:0]; // @[Datapath.scala 71:59]
+  assign regfile_io_write_addr = dest_reg_wb; // @[Datapath.scala 92:27]
+  assign regfile_io_write_en = wb_reg_write; // @[Datapath.scala 93:25]
+  assign regfile_io_write_data = 2'h3 == wb_wb_sel ? _regfile_io_write_data_T_3 : _regfile_io_write_data_T_7; // @[Mux.scala 80:57]
+  assign alu_io_a = a; // @[Datapath.scala 78:14]
+  assign alu_io_b = b; // @[Datapath.scala 79:14]
+  assign alu_io_op = ex_alu_op; // @[Datapath.scala 80:15]
+  assign immgen_io_inst = inst; // @[Datapath.scala 72:20]
+  assign immgen_io_sel = io_ctrl_id_imm_sel; // @[Datapath.scala 73:19]
+  assign brcond_io_z = alu_io_z; // @[Datapath.scala 82:17]
+  assign brcond_io_sel = ex_br_sel; // @[Datapath.scala 83:19]
   always @(posedge clock) begin
     if (reset) begin // @[Datapath.scala 33:21]
       pc <= 32'h3000; // @[Datapath.scala 33:21]
-    end else if (io_ctrl_ex_pc_sel == 2'h1 | brcond_io_taken) begin // @[Datapath.scala 66:30]
+    end else if (io_ctrl_ex_pc_sel == 2'h1 | brcond_io_taken) begin // @[Datapath.scala 63:30]
       pc <= alu_io_res;
     end else begin
       pc <= _pc_T_3;
     end
-    mem_REG_mem_write <= io_ctrl_mem_mem_write; // @[Datapath.scala 48:30]
-    mem_mem_write <= mem_REG_mem_write; // @[Datapath.scala 48:22]
-    wb_REG_wb_sel <= io_ctrl_wb_wb_sel; // @[Datapath.scala 54:37]
-    wb_REG_reg_write <= io_ctrl_wb_reg_write; // @[Datapath.scala 54:37]
-    wb_REG_1_wb_sel <= wb_REG_wb_sel; // @[Datapath.scala 54:29]
-    wb_REG_1_reg_write <= wb_REG_reg_write; // @[Datapath.scala 54:29]
-    wb_wb_sel <= wb_REG_1_wb_sel; // @[Datapath.scala 54:21]
-    wb_reg_write <= wb_REG_1_reg_write; // @[Datapath.scala 54:21]
-    regfile_io_write_data_REG <= alu_io_res; // @[Datapath.scala 80:34]
-    regfile_io_write_data_REG_1 <= regfile_io_write_data_REG; // @[Datapath.scala 80:26]
+    inst <= io_imem_spo; // @[Datapath.scala 36:23]
+    pc_id <= pc; // @[Datapath.scala 37:24]
+    pc_ex <= pc_id; // @[Datapath.scala 40:24]
+    if (ex_a_sel == 2'h3) begin // @[Datapath.scala 76:13]
+      a <= pc_ex;
+    end else begin
+      a <= a_REG;
+    end
+    if (ex_b_sel == 2'h1) begin // @[Datapath.scala 77:13]
+      b <= b_REG;
+    end else begin
+      b <= imm;
+    end
+    imm <= immgen_io_imm; // @[Datapath.scala 43:22]
+    dest_reg <= inst[11:7]; // @[Datapath.scala 44:32]
+    ex_a_sel <= io_ctrl_ex_a_sel; // @[Datapath.scala 46:21]
+    ex_b_sel <= io_ctrl_ex_b_sel; // @[Datapath.scala 46:21]
+    ex_alu_op <= io_ctrl_ex_alu_op; // @[Datapath.scala 46:21]
+    ex_br_sel <= io_ctrl_ex_br_sel; // @[Datapath.scala 46:21]
+    mem_REG_mem_write <= io_ctrl_mem_mem_write; // @[Datapath.scala 49:30]
+    mem_mem_write <= mem_REG_mem_write; // @[Datapath.scala 49:22]
+    pc_mem <= pc_ex; // @[Datapath.scala 50:25]
+    alu_out_mem <= alu_io_res; // @[Datapath.scala 51:30]
+    dest_reg_mem <= dest_reg; // @[Datapath.scala 52:31]
+    pc_wb <= pc_mem; // @[Datapath.scala 55:24]
+    wb_REG_wb_sel <= io_ctrl_wb_wb_sel; // @[Datapath.scala 57:37]
+    wb_REG_reg_write <= io_ctrl_wb_reg_write; // @[Datapath.scala 57:37]
+    wb_REG_1_wb_sel <= wb_REG_wb_sel; // @[Datapath.scala 57:29]
+    wb_REG_1_reg_write <= wb_REG_reg_write; // @[Datapath.scala 57:29]
+    wb_wb_sel <= wb_REG_1_wb_sel; // @[Datapath.scala 57:21]
+    wb_reg_write <= wb_REG_1_reg_write; // @[Datapath.scala 57:21]
+    alu_out_wb <= alu_out_mem; // @[Datapath.scala 58:29]
+    dest_reg_wb <= dest_reg_mem; // @[Datapath.scala 59:30]
+    a_REG <= regfile_io_read_data1; // @[Datapath.scala 76:47]
+    b_REG <= regfile_io_read_data2; // @[Datapath.scala 77:41]
+    io_dmem_d_REG <= regfile_io_read_data2; // @[Datapath.scala 88:33]
+    io_dmem_d_REG_1 <= io_dmem_d_REG; // @[Datapath.scala 88:25]
+    regfile_io_write_data_REG <= io_dmem_spo; // @[Datapath.scala 96:64]
   end
 // Register and memory initialization
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
@@ -748,25 +817,65 @@ initial begin
   _RAND_0 = {1{`RANDOM}};
   pc = _RAND_0[31:0];
   _RAND_1 = {1{`RANDOM}};
-  mem_REG_mem_write = _RAND_1[0:0];
+  inst = _RAND_1[31:0];
   _RAND_2 = {1{`RANDOM}};
-  mem_mem_write = _RAND_2[0:0];
+  pc_id = _RAND_2[31:0];
   _RAND_3 = {1{`RANDOM}};
-  wb_REG_wb_sel = _RAND_3[1:0];
+  pc_ex = _RAND_3[31:0];
   _RAND_4 = {1{`RANDOM}};
-  wb_REG_reg_write = _RAND_4[0:0];
+  a = _RAND_4[31:0];
   _RAND_5 = {1{`RANDOM}};
-  wb_REG_1_wb_sel = _RAND_5[1:0];
+  b = _RAND_5[31:0];
   _RAND_6 = {1{`RANDOM}};
-  wb_REG_1_reg_write = _RAND_6[0:0];
+  imm = _RAND_6[31:0];
   _RAND_7 = {1{`RANDOM}};
-  wb_wb_sel = _RAND_7[1:0];
+  dest_reg = _RAND_7[4:0];
   _RAND_8 = {1{`RANDOM}};
-  wb_reg_write = _RAND_8[0:0];
+  ex_a_sel = _RAND_8[1:0];
   _RAND_9 = {1{`RANDOM}};
-  regfile_io_write_data_REG = _RAND_9[31:0];
+  ex_b_sel = _RAND_9[1:0];
   _RAND_10 = {1{`RANDOM}};
-  regfile_io_write_data_REG_1 = _RAND_10[31:0];
+  ex_alu_op = _RAND_10[2:0];
+  _RAND_11 = {1{`RANDOM}};
+  ex_br_sel = _RAND_11[0:0];
+  _RAND_12 = {1{`RANDOM}};
+  mem_REG_mem_write = _RAND_12[0:0];
+  _RAND_13 = {1{`RANDOM}};
+  mem_mem_write = _RAND_13[0:0];
+  _RAND_14 = {1{`RANDOM}};
+  pc_mem = _RAND_14[31:0];
+  _RAND_15 = {1{`RANDOM}};
+  alu_out_mem = _RAND_15[31:0];
+  _RAND_16 = {1{`RANDOM}};
+  dest_reg_mem = _RAND_16[4:0];
+  _RAND_17 = {1{`RANDOM}};
+  pc_wb = _RAND_17[31:0];
+  _RAND_18 = {1{`RANDOM}};
+  wb_REG_wb_sel = _RAND_18[1:0];
+  _RAND_19 = {1{`RANDOM}};
+  wb_REG_reg_write = _RAND_19[0:0];
+  _RAND_20 = {1{`RANDOM}};
+  wb_REG_1_wb_sel = _RAND_20[1:0];
+  _RAND_21 = {1{`RANDOM}};
+  wb_REG_1_reg_write = _RAND_21[0:0];
+  _RAND_22 = {1{`RANDOM}};
+  wb_wb_sel = _RAND_22[1:0];
+  _RAND_23 = {1{`RANDOM}};
+  wb_reg_write = _RAND_23[0:0];
+  _RAND_24 = {1{`RANDOM}};
+  alu_out_wb = _RAND_24[31:0];
+  _RAND_25 = {1{`RANDOM}};
+  dest_reg_wb = _RAND_25[4:0];
+  _RAND_26 = {1{`RANDOM}};
+  a_REG = _RAND_26[31:0];
+  _RAND_27 = {1{`RANDOM}};
+  b_REG = _RAND_27[31:0];
+  _RAND_28 = {1{`RANDOM}};
+  io_dmem_d_REG = _RAND_28[31:0];
+  _RAND_29 = {1{`RANDOM}};
+  io_dmem_d_REG_1 = _RAND_29[31:0];
+  _RAND_30 = {1{`RANDOM}};
+  regfile_io_write_data_REG = _RAND_30[31:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

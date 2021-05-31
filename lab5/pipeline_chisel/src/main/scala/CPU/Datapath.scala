@@ -24,7 +24,7 @@ class DataPathIO extends Bundle {
 
 class DataPath extends Module {
     val io = IO (new DataPathIO)
-    val inst = io.imem.spo
+    // val inst = io.imem.spo
     val regfile = Module (new RegFile(5)(32))
     val alu     = Module (new ALU(32))
     val immgen  = Module (new ImmGen)
@@ -33,53 +33,68 @@ class DataPath extends Module {
     val pc = RegInit(PC_START.U(32.W))
     val stall = Reg(Bool()) // THE stall!
     /************ IF / ID ********************************/
-    val inst_ifid = RegInit(0.U(32.W)) // TODO: add NOP instruction
-    val pc_ifid = Reg(UInt(32.W))
+    val inst = RegNext(io.imem.spo)
+    val pc_id = RegNext(pc)
 
     /************ ID / EX ********************************/
-    val pc_idex = RegInit(0.U(32.W))
+    val pc_ex = RegNext(pc_id)
     val a = Reg(UInt(32.W))
     val b = Reg(UInt(32.W))
-    val imm = Reg(UInt(32.W))
-    val dest_reg = Reg(UInt(5.W))
+    val imm = RegNext(immgen.io.imm)
+    val dest_reg = RegNext(inst(11, 7))
     val id = io.ctrl.id
     val ex = RegNext(io.ctrl.ex)
+
     /************ EX / MEM *******************************/
     val mem = RegNext(RegNext(io.ctrl.mem))
-    val alu_out = RegNext(alu.io.res)
+    val pc_mem = RegNext(pc_ex)
+    val alu_out_mem = RegNext(alu.io.res)
     val dest_reg_mem = RegNext(dest_reg)
     val dmem_data = RegNext(b)
     /************ MEM / WB *******************************/
-    val read_data = RegNext(io.dmem.dpo)
+    val pc_wb = RegNext(pc_mem)
+    val read_data = RegNext(io.dmem.spo)
     val wb = RegNext(RegNext(RegNext(io.ctrl.wb)))
-    val alu_out_wb = RegNext(alu_out)
+    val alu_out_wb = RegNext(alu_out_mem)
     val dest_reg_wb = RegNext(dest_reg_mem)
 
-    // the single cycle one (not changed)
-    io.ctrl.inst := inst
-    io.imem.a := pc(9, 2) // 这里不太好说清楚 (我们通常读的是byte,但是这里一个地址就可以读出来指令)
-    io.dmem.a := alu.io.res(7, 0)
-    io.dmem.dpra := io.debug_bus.mem_rf_addr // additional port, for debug
-    io.dmem.d := regfile.io.read_data2
-    io.dmem.we := mem.mem_write && !alu.io.res(10)
-
+    // Instruction Fetch
+    io.imem.a := pc(9, 2)
     pc := Mux(stall, pc, Mux (io.ctrl.ex.pc_sel === PC_JMP || brcond.io.taken,
         alu.io.res,
         pc + 4.U))
 
-    alu.io.a := Mux(io.ctrl.ex.a_sel === A_PC, pc, regfile.io.read_data1)
-    alu.io.b := Mux(io.ctrl.ex.b_sel === B_RS2, regfile.io.read_data2, immgen.io.imm)
-    alu.io.op := io.ctrl.ex.alu_op
-
+    // Instruction Decode
+    io.ctrl.inst := inst
     regfile.io.read_addr1 := inst(19, 15)
     regfile.io.read_addr2 := inst(24, 20)
     regfile.io.read_addr_debug := io.debug_bus.mem_rf_addr(4, 0)
-    regfile.io.write_addr := inst(11, 7)
+    immgen.io.inst := inst
+    immgen.io.sel := id.imm_sel
+
+    // Execution
+    a := Mux(ex.a_sel === A_PC, pc_ex, RegNext(regfile.io.read_data1))
+    b := Mux(ex.b_sel === B_RS2, RegNext(regfile.io.read_data2), imm)
+    alu.io.a := a
+    alu.io.b := b
+    alu.io.op := ex.alu_op
+    brcond.io.res := alu.io.res
+    brcond.io.z := alu.io.z
+    brcond.io.sel := ex.br_sel
+
+    // Memory
+    io.dmem.a := alu_out_mem(7, 0)
+    io.dmem.dpra := io.debug_bus.mem_rf_addr // additional port, for debug
+    io.dmem.d := RegNext(RegNext(regfile.io.read_data2))
+    io.dmem.we := mem.mem_write && !alu_out_mem(10)
+
+    // Write Back
+    regfile.io.write_addr := dest_reg_wb
     regfile.io.write_en := wb.reg_write
     regfile.io.write_data := MuxLookup (wb.wb_sel, 0.U, Seq (
-        WB_ALU -> RegNext(RegNext(alu.io.res)),
-        WB_MEM -> (Mux(alu.io.res(10), io.io_bus.io_din, io.dmem.spo)),
-        WB_PC4 -> (pc + 4.U)
+        WB_ALU -> alu_out_wb,
+        WB_MEM -> Mux(alu_out_wb(10), io.io_bus.io_din, RegNext(io.dmem.spo)),
+        WB_PC4 -> (pc_wb + 4.U)
     ))
 
     io.io_bus.io_addr := alu.io.res(7, 0)
@@ -88,9 +103,4 @@ class DataPath extends Module {
     io.debug_bus.rf_data := regfile.io.read_data_debug
     io.debug_bus.mem_data := io.dmem.dpo
     io.debug_bus.pc := pc
-    immgen.io.inst := inst
-    immgen.io.sel := io.ctrl.id.imm_sel
-    brcond.io.res := alu.io.res
-    brcond.io.z := alu.io.z
-    brcond.io.sel := io.ctrl.ex.br_sel
 }
