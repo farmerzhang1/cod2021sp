@@ -31,40 +31,49 @@ class DataPath extends Module {
     val brcond  = Module (new BrCond)
     import Const._
     val pc = RegInit(PC_START.U(32.W))
-    val stall = Reg(Bool()) // THE stall!
+    val stall = RegInit(false.B) // THE stall!
+    // 怎么只暂停部分的流水线呢？控制信号要怎么处理？
+    // please refer to https://courses.cs.vt.edu/cs2506/Spring2013/Notes/L12.PipelineStalls.pdf (it's quite nice!)
+    // 话说这个pdf里面的图跟老师给的ppt里面的图好像一样
+    // 注意到状态间的命名方式：xx_id / xx_ex / xx_mem / xx_wb 代表右边的状态是id, ex, mem, wb
     /************ IF / ID ********************************/
-    val inst = RegNext(io.imem.spo)
-    val pc_id = RegNext(pc)
+    val inst = Reg(UInt(32.W))
+    val pc_id = Reg(UInt(32.W))
 
     /************ ID / EX ********************************/
-    val pc_ex = RegNext(pc_id)
+    val pc_ex = Reg(UInt(32.W))
     val a = Reg(UInt(32.W))
     val b = Reg(UInt(32.W))
-    val imm = RegNext(immgen.io.imm)
-    val dest_reg = RegNext(inst(11, 7))
+    val imm = Reg(UInt(32.W))
+    val dest_reg_ex = Reg(UInt(5.W))
     val id = io.ctrl.id
-    val ex = RegNext(io.ctrl.ex)
+    val ex = Reg(new EX)
+    val wb_ex = Reg(new WB)
+    val mem_ex = Reg(new MEM)
 
     /************ EX / MEM *******************************/
-    val mem = RegNext(RegNext(io.ctrl.mem))
-    val pc_mem = RegNext(pc_ex)
-    val alu_out_mem = RegNext(alu.io.res)
-    val dest_reg_mem = RegNext(dest_reg)
-    val dmem_data = RegNext(b)
+    val mem = Reg(new MEM)
+    val wb_mem = Reg(new WB)
+    val pc_mem = Reg(UInt(32.W))
+    val alu_out_mem = Reg(UInt(32.W))
+    val dest_reg_mem = Reg(UInt(5.W))
+    val dmem_write_data = Reg(UInt(32.W))
     /************ MEM / WB *******************************/
-    val pc_wb = RegNext(pc_mem)
-    val read_data = RegNext(io.dmem.spo)
-    val wb = RegNext(RegNext(RegNext(io.ctrl.wb)))
-    val alu_out_wb = RegNext(alu_out_mem)
-    val dest_reg_wb = RegNext(dest_reg_mem)
+    val pc_wb = Reg(UInt(32.W))
+    val wb = Reg(new WB)
+    val alu_out_wb = Reg(UInt(32.W))
+    val dest_reg_wb = Reg(UInt(5.W))
 
     // Instruction Fetch
     io.imem.a := pc(9, 2)
-    pc := Mux(stall, pc, Mux (io.ctrl.ex.pc_sel === PC_JMP || brcond.io.taken,
-        alu.io.res,
+    pc := Mux(stall, pc, Mux (ex.pc_sel === PC_JMP || brcond.io.taken,
+        alu.io.res, // TODO jump instruction not working (i think)
         pc + 4.U))
 
     // Instruction Decode
+    val load_use_hazard_a = mem_ex.mem_read && dest_reg_ex === inst(19, 15)
+    val load_use_hazard_b = mem_ex.mem_read && dest_reg_ex === inst(24, 20)
+    stall := load_use_hazard_a || load_use_hazard_b
     io.ctrl.inst := inst
     regfile.io.read_addr1 := inst(19, 15)
     regfile.io.read_addr2 := inst(24, 20)
@@ -73,22 +82,24 @@ class DataPath extends Module {
     immgen.io.sel := id.imm_sel
 
     // Execution
-    a := Mux(ex.a_sel === A_PC, pc_ex, RegNext(regfile.io.read_data1))
-    b := Mux(ex.b_sel === B_RS2, RegNext(regfile.io.read_data2), imm)
-    alu.io.a := a
-    alu.io.b := b
+    val hazard_a = wb_mem.reg_write && RegNext(inst(19, 15)) === dest_reg_mem
+    val hazard_b = wb_mem.reg_write && RegNext(inst(24, 20)) === dest_reg_mem
+    alu.io.a := Mux(ex.a_sel === A_PC, pc_ex,
+                                       Mux(hazard_a, alu_out_mem, a))
+    alu.io.b := Mux(ex.b_sel === B_RS2, Mux(hazard_b, alu_out_mem, b),
+                                        imm)
     alu.io.op := ex.alu_op
     brcond.io.res := alu.io.res
     brcond.io.z := alu.io.z
     brcond.io.sel := ex.br_sel
 
-    // Memory
+    // Memory Access
     io.dmem.a := alu_out_mem(7, 0)
     io.dmem.dpra := io.debug_bus.mem_rf_addr // additional port, for debug
     io.dmem.d := RegNext(RegNext(regfile.io.read_data2))
     io.dmem.we := mem.mem_write && !alu_out_mem(10)
 
-    // Write Back
+    // Register Write Back
     regfile.io.write_addr := dest_reg_wb
     regfile.io.write_en := wb.reg_write
     regfile.io.write_data := MuxLookup (wb.wb_sel, 0.U, Seq (
@@ -97,10 +108,37 @@ class DataPath extends Module {
         WB_PC4 -> (pc_wb + 4.U)
     ))
 
+    // Miscellaneous
     io.io_bus.io_addr := alu.io.res(7, 0)
     io.io_bus.io_dout := regfile.io.read_data2
     io.io_bus.io_we := alu.io.res(10) && io.ctrl.mem.mem_write
     io.debug_bus.rf_data := regfile.io.read_data_debug
     io.debug_bus.mem_data := io.dmem.dpo
     io.debug_bus.pc := pc
+
+    // Pipelining
+    when (!stall) {
+        inst := io.imem.spo
+        pc_id := pc
+        pc_ex := pc_id
+        a := regfile.io.read_data1
+        b := regfile.io.read_data2
+        imm := immgen.io.imm
+        dest_reg_ex := inst(11, 7)
+        ex := io.ctrl.ex
+        wb_ex := io.ctrl.wb
+        mem_ex := io.ctrl.mem
+        mem := mem_ex
+        wb_mem := wb_ex
+        pc_mem := pc_ex
+        alu_out_mem := alu.io.res
+        dest_reg_mem := dest_reg_ex
+        dmem_write_data := b
+        pc_wb := pc_mem
+        wb := wb_mem
+        alu_out_wb := alu_out_mem
+        dest_reg_wb := dest_reg_mem
+    }.otherwise {
+        // TODO
+    }
 }

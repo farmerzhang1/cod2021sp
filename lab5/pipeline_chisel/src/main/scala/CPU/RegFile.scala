@@ -17,7 +17,8 @@ class RegFile (val n : Int) (val w : Int) extends Module {
     when(io.write_en && io.write_addr =/= 0.U) { // x0 is not writable
         regf(io.write_addr) := io.write_data
     }
-    io.read_data1 := regf(io.read_addr1)
-    io.read_data2 := regf(io.read_addr2)
+    // Structural Hazards (write first)
+    io.read_data1 := Mux(io.read_addr1 === io.write_addr, io.write_data, regf(io.read_addr1))
+    io.read_data2 := Mux(io.read_addr2 === io.write_addr, io.write_data, regf(io.read_addr2))
     io.read_data_debug := regf(io.read_addr_debug)
 }

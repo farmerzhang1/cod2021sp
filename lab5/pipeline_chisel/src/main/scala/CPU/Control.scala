@@ -73,6 +73,7 @@ class EX extends Bundle {
 }
 class MEM extends Bundle {
     val mem_write = Bool()
+    val mem_read = Bool() // need it for load-use hazard detection
 }
 class WB extends Bundle {
     val wb_sel = UInt(2.W)
@@ -108,6 +109,7 @@ class Control extends Module {
     io.ex.pc_sel := pc_sel
 
     io.mem.mem_write := store_sel =/= ST_XXX
+    io.mem.mem_read := load_sel =/= LD_XXX
 
     io.wb.wb_sel := wb_sel
     io.wb.reg_write := wen
