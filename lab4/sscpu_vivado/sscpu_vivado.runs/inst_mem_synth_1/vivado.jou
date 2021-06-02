@@ -2,8 +2,8 @@
 # Vivado v2020.1 (64-bit)
 # SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
 # IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
-# Start of session at: Sat May  1 13:20:06 2021
-# Process ID: 8216
+# Start of session at: Thu May  6 11:53:31 2021
+# Process ID: 10428
 # Current directory: D:/USTC/21spring books/Computer Organization/cod2021sp/lab4/sscpu_vivado/sscpu_vivado.runs/inst_mem_synth_1
 # Command line: vivado.exe -log inst_mem.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source inst_mem.tcl
 # Log file: D:/USTC/21spring books/Computer Organization/cod2021sp/lab4/sscpu_vivado/sscpu_vivado.runs/inst_mem_synth_1/inst_mem.vds
