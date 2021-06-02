@@ -546,6 +546,13 @@ module ImmGen(
   wire [31:0] _io_imm_T_17 = 3'h5 == io_sel ? $signed({{19{_io_imm_T_5[12]}},_io_imm_T_5}) : $signed(_io_imm_T_15); // @[Mux.scala 80:57]
   assign io_imm = 3'h4 == io_sel ? $signed({{11{_io_imm_T_7[20]}},_io_imm_T_7}) : $signed(_io_imm_T_17); // @[ImmGen.scala 22:12]
 endmodule
+module BrCond(
+  input   io_z,
+  input   io_sel,
+  output  io_taken
+);
+  assign io_taken = io_sel & io_z; // @[BrCond.scala 17:34]
+endmodule
 module DataPath(
   input         clock,
   input         reset,
@@ -553,6 +560,7 @@ module DataPath(
   input  [2:0]  io_ctrl_imm_sel,
   input         io_ctrl_br_sel,
   input         io_ctrl_mem_write,
+  input  [1:0]  io_ctrl_a_sel,
   input  [1:0]  io_ctrl_b_sel,
   input  [2:0]  io_ctrl_alu_op,
   input  [1:0]  io_ctrl_pc_sel,
@@ -597,9 +605,11 @@ module DataPath(
   wire [31:0] immgen_io_inst; // @[Datapath.scala 32:26]
   wire [2:0] immgen_io_sel; // @[Datapath.scala 32:26]
   wire [31:0] immgen_io_imm; // @[Datapath.scala 32:26]
+  wire  brcond_io_z; // @[Datapath.scala 33:26]
+  wire  brcond_io_sel; // @[Datapath.scala 33:26]
+  wire  brcond_io_taken; // @[Datapath.scala 33:26]
   reg [31:0] pc; // @[Datapath.scala 35:21]
-  wire [31:0] _pc_T_5 = pc + immgen_io_imm; // @[Datapath.scala 56:12]
-  wire [31:0] _pc_T_7 = pc + 32'h4; // @[Datapath.scala 57:12]
+  wire [31:0] _pc_T_3 = pc + 32'h4; // @[Datapath.scala 57:12]
   wire [31:0] _regfile_io_write_data_T_1 = alu_io_res[10] ? io_io_bus_io_din : io_dmem_spo; // @[Datapath.scala 70:23]
   wire [31:0] _regfile_io_write_data_T_5 = 2'h1 == io_ctrl_wb_sel ? alu_io_res : 32'h0; // @[Mux.scala 80:57]
   wire [31:0] _regfile_io_write_data_T_7 = 2'h2 == io_ctrl_wb_sel ? _regfile_io_write_data_T_1 :
@@ -629,6 +639,11 @@ module DataPath(
     .io_sel(immgen_io_sel),
     .io_imm(immgen_io_imm)
   );
+  BrCond brcond ( // @[Datapath.scala 33:26]
+    .io_z(brcond_io_z),
+    .io_sel(brcond_io_sel),
+    .io_taken(brcond_io_taken)
+  );
   assign io_ctrl_inst = io_imem_spo; // @[Datapath.scala 43:18]
   assign io_dmem_a = alu_io_res[7:0]; // @[Datapath.scala 44:28]
   assign io_dmem_d = regfile_io_read_data2; // @[Datapath.scala 46:15]
@@ -648,19 +663,21 @@ module DataPath(
   assign regfile_io_read_addr_debug = io_debug_bus_mem_rf_addr[4:0]; // @[Datapath.scala 65:59]
   assign regfile_io_write_addr = io_imem_spo[11:7]; // @[Datapath.scala 66:34]
   assign regfile_io_write_en = io_ctrl_reg_write; // @[Datapath.scala 67:25]
-  assign regfile_io_write_data = 2'h3 == io_ctrl_wb_sel ? _pc_T_7 : _regfile_io_write_data_T_7; // @[Mux.scala 80:57]
-  assign alu_io_a = regfile_io_read_data1; // @[Datapath.scala 59:14]
+  assign regfile_io_write_data = 2'h3 == io_ctrl_wb_sel ? _pc_T_3 : _regfile_io_write_data_T_7; // @[Mux.scala 80:57]
+  assign alu_io_a = io_ctrl_a_sel == 2'h3 ? pc : regfile_io_read_data1; // @[Datapath.scala 59:20]
   assign alu_io_b = io_ctrl_b_sel == 2'h1 ? regfile_io_read_data2 : immgen_io_imm; // @[Datapath.scala 60:20]
   assign alu_io_op = io_ctrl_alu_op; // @[Datapath.scala 61:15]
   assign immgen_io_inst = io_imem_spo; // @[Datapath.scala 76:20]
   assign immgen_io_sel = io_ctrl_imm_sel; // @[Datapath.scala 77:19]
+  assign brcond_io_z = alu_io_z; // @[Datapath.scala 81:17]
+  assign brcond_io_sel = io_ctrl_br_sel; // @[Datapath.scala 82:19]
   always @(posedge clock) begin
     if (reset) begin // @[Datapath.scala 35:21]
       pc <= 32'h3000; // @[Datapath.scala 35:21]
-    end else if (io_ctrl_pc_sel == 2'h1 | io_ctrl_br_sel & alu_io_z) begin // @[Datapath.scala 55:15]
-      pc <= _pc_T_5;
+    end else if (io_ctrl_pc_sel == 2'h1 | brcond_io_taken) begin // @[Datapath.scala 55:15]
+      pc <= alu_io_res;
     end else begin
-      pc <= _pc_T_7;
+      pc <= _pc_T_3;
     end
   end
 // Register and memory initialization
@@ -714,6 +731,7 @@ module Control(
   output [2:0]  io_imm_sel,
   output        io_br_sel,
   output        io_mem_write,
+  output [1:0]  io_a_sel,
   output [1:0]  io_b_sel,
   output [2:0]  io_alu_op,
   output [1:0]  io_pc_sel,
@@ -744,8 +762,13 @@ module Control(
   wire [2:0] _T_24 = _T_7 ? 3'h0 : _T_23; // @[Lookup.scala 33:37]
   wire [2:0] _T_25 = _T_5 ? 3'h0 : _T_24; // @[Lookup.scala 33:37]
   wire [2:0] _T_26 = _T_3 ? 3'h0 : _T_25; // @[Lookup.scala 33:37]
-  wire [1:0] _T_28 = _T_9 ? 2'h1 : _T_12; // @[Lookup.scala 33:37]
-  wire [1:0] _T_34 = _T_7 ? 2'h2 : _T_28; // @[Lookup.scala 33:37]
+  wire [1:0] _T_27 = _T_11 ? 2'h3 : 2'h0; // @[Lookup.scala 33:37]
+  wire [1:0] _T_28 = _T_9 ? 2'h3 : _T_27; // @[Lookup.scala 33:37]
+  wire [1:0] _T_29 = _T_7 ? 2'h1 : _T_28; // @[Lookup.scala 33:37]
+  wire [1:0] _T_30 = _T_5 ? 2'h1 : _T_29; // @[Lookup.scala 33:37]
+  wire [1:0] _T_31 = _T_3 ? 2'h1 : _T_30; // @[Lookup.scala 33:37]
+  wire [1:0] _T_33 = _T_9 ? 2'h1 : _T_12; // @[Lookup.scala 33:37]
+  wire [1:0] _T_34 = _T_7 ? 2'h2 : _T_33; // @[Lookup.scala 33:37]
   wire [1:0] _T_35 = _T_5 ? 2'h2 : _T_34; // @[Lookup.scala 33:37]
   wire [1:0] _T_36 = _T_3 ? 2'h2 : _T_35; // @[Lookup.scala 33:37]
   wire  _T_39 = _T_7 ? 1'h0 : _T_9; // @[Lookup.scala 33:37]
@@ -753,16 +776,16 @@ module Control(
   wire  _T_41 = _T_3 ? 1'h0 : _T_40; // @[Lookup.scala 33:37]
   wire  _T_45 = _T_5 ? 1'h0 : _T_7; // @[Lookup.scala 33:37]
   wire  _T_46 = _T_3 ? 1'h0 : _T_45; // @[Lookup.scala 33:37]
-  wire [1:0] _T_52 = _T_11 ? 2'h3 : 2'h0; // @[Lookup.scala 33:37]
-  wire [1:0] _T_53 = _T_9 ? 2'h1 : _T_52; // @[Lookup.scala 33:37]
+  wire [1:0] _T_53 = _T_9 ? 2'h1 : _T_27; // @[Lookup.scala 33:37]
   wire [1:0] _T_54 = _T_7 ? 2'h1 : _T_53; // @[Lookup.scala 33:37]
   wire [1:0] _T_55 = _T_5 ? 2'h2 : _T_54; // @[Lookup.scala 33:37]
   wire [1:0] _T_56 = _T_3 ? 2'h1 : _T_55; // @[Lookup.scala 33:37]
   wire  _T_58 = _T_9 ? 1'h0 : _T_11; // @[Lookup.scala 33:37]
   wire  _T_59 = _T_7 ? 1'h0 : _T_58; // @[Lookup.scala 33:37]
-  assign io_imm_sel = _T_1 ? 3'h0 : _T_21; // @[Lookup.scala 33:37]
+  assign io_imm_sel = _T_1 ? 3'h1 : _T_21; // @[Lookup.scala 33:37]
   assign io_br_sel = _T_1 ? 1'h0 : _T_41; // @[Lookup.scala 33:37]
   assign io_mem_write = _T_1 ? 1'h0 : _T_46; // @[Lookup.scala 33:37]
+  assign io_a_sel = _T_1 ? 2'h1 : _T_31; // @[Lookup.scala 33:37]
   assign io_b_sel = _T_1 ? 2'h1 : _T_36; // @[Lookup.scala 33:37]
   assign io_alu_op = _T_1 ? 3'h0 : _T_26; // @[Lookup.scala 33:37]
   assign io_pc_sel = _T_1 ? 2'h0 : _T_16; // @[Lookup.scala 33:37]
@@ -795,6 +818,7 @@ module CPU(
   wire [2:0] datapath_io_ctrl_imm_sel; // @[Core.scala 14:27]
   wire  datapath_io_ctrl_br_sel; // @[Core.scala 14:27]
   wire  datapath_io_ctrl_mem_write; // @[Core.scala 14:27]
+  wire [1:0] datapath_io_ctrl_a_sel; // @[Core.scala 14:27]
   wire [1:0] datapath_io_ctrl_b_sel; // @[Core.scala 14:27]
   wire [2:0] datapath_io_ctrl_alu_op; // @[Core.scala 14:27]
   wire [1:0] datapath_io_ctrl_pc_sel; // @[Core.scala 14:27]
@@ -820,6 +844,7 @@ module CPU(
   wire [2:0] ctrl_io_imm_sel; // @[Core.scala 15:23]
   wire  ctrl_io_br_sel; // @[Core.scala 15:23]
   wire  ctrl_io_mem_write; // @[Core.scala 15:23]
+  wire [1:0] ctrl_io_a_sel; // @[Core.scala 15:23]
   wire [1:0] ctrl_io_b_sel; // @[Core.scala 15:23]
   wire [2:0] ctrl_io_alu_op; // @[Core.scala 15:23]
   wire [1:0] ctrl_io_pc_sel; // @[Core.scala 15:23]
@@ -844,6 +869,7 @@ module CPU(
     .io_ctrl_imm_sel(datapath_io_ctrl_imm_sel),
     .io_ctrl_br_sel(datapath_io_ctrl_br_sel),
     .io_ctrl_mem_write(datapath_io_ctrl_mem_write),
+    .io_ctrl_a_sel(datapath_io_ctrl_a_sel),
     .io_ctrl_b_sel(datapath_io_ctrl_b_sel),
     .io_ctrl_alu_op(datapath_io_ctrl_alu_op),
     .io_ctrl_pc_sel(datapath_io_ctrl_pc_sel),
@@ -871,6 +897,7 @@ module CPU(
     .io_imm_sel(ctrl_io_imm_sel),
     .io_br_sel(ctrl_io_br_sel),
     .io_mem_write(ctrl_io_mem_write),
+    .io_a_sel(ctrl_io_a_sel),
     .io_b_sel(ctrl_io_b_sel),
     .io_alu_op(ctrl_io_alu_op),
     .io_pc_sel(ctrl_io_pc_sel),
@@ -893,6 +920,7 @@ module CPU(
   assign datapath_io_ctrl_imm_sel = ctrl_io_imm_sel; // @[Core.scala 16:22]
   assign datapath_io_ctrl_br_sel = ctrl_io_br_sel; // @[Core.scala 16:22]
   assign datapath_io_ctrl_mem_write = ctrl_io_mem_write; // @[Core.scala 16:22]
+  assign datapath_io_ctrl_a_sel = ctrl_io_a_sel; // @[Core.scala 16:22]
   assign datapath_io_ctrl_b_sel = ctrl_io_b_sel; // @[Core.scala 16:22]
   assign datapath_io_ctrl_alu_op = ctrl_io_alu_op; // @[Core.scala 16:22]
   assign datapath_io_ctrl_pc_sel = ctrl_io_pc_sel; // @[Core.scala 16:22]

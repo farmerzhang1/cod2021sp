@@ -1,10 +1,8 @@
-package SingleCycle
+package CPU
 import chisel3._
 import Control._
 
 class BrCondIO extends Bundle {
-    // val rs1 = Input(UInt(32.W))
-    // val rs2 = Input(UInt(32.W))
     val res = Input(UInt(32.W)) // the result of alu(we need it for BGE/BLT), the op should be ALU_SUB
     val z = Input(Bool())
     val sel = Input(UInt(1.W))

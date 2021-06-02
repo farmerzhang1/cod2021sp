@@ -52,11 +52,11 @@ class DataPath extends Module {
     //     io.ctrl.pc_sel === PC_JMP, pc + immgen.io.imm, Mux(
     //     brcond.io.taken, pc + immgen.io.imm, pc + 4.U
     //     )))
-    pc := Mux (io.ctrl.pc_sel === PC_JMP || io.ctrl.br_sel === BR_EQ && alu.io.z,
-        pc + immgen.io.imm,
+    pc := Mux (io.ctrl.pc_sel === PC_JMP || brcond.io.taken,
+        alu.io.res,
         pc + 4.U)
 
-    alu.io.a := regfile.io.read_data1
+    alu.io.a := Mux(io.ctrl.a_sel === A_PC, pc, regfile.io.read_data1)
     alu.io.b := Mux(io.ctrl.b_sel === B_RS2, regfile.io.read_data2, immgen.io.imm)
     alu.io.op := io.ctrl.alu_op
 
@@ -75,7 +75,9 @@ class DataPath extends Module {
     io.debug_bus.pc := pc
     immgen.io.inst := inst
     immgen.io.sel := io.ctrl.imm_sel
-    brcond.io.rs1 := regfile.io.read_data1
-    brcond.io.rs2 := regfile.io.read_data2
+    // brcond.io.rs1 := regfile.io.read_data1
+    // brcond.io.rs2 := regfile.io.read_data2
+    brcond.io.res := alu.io.res
+    brcond.io.z := alu.io.z
     brcond.io.sel := io.ctrl.br_sel
 }

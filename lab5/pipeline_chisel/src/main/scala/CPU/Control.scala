@@ -1,4 +1,4 @@
-package SingleCycle
+package CPU
 import chisel3._
 import chisel3.util._
 import Instructions._
@@ -58,35 +58,59 @@ object Control {
         JAL  -> List(PC_JMP, IMM_J, ALU_ADD, A_PC , B_RS2, BR_XXX, ST_XXX, LD_XXX, WB_PC4, Y)
     )
 }
-
+// try to classify the control signals of the five stages
+class IF extends Bundle {
+}
+class ID extends Bundle {
+    val imm_sel = UInt(3.W)
+}
+class EX extends Bundle {
+    val a_sel = UInt(2.W)
+    val b_sel = UInt(2.W)
+    val alu_op = UInt(3.W)
+    val br_sel = UInt(1.W) // 判定是否 branch 需要 alu 的结果
+    val pc_sel = UInt(2.W) // 放在一起好了，感觉这样好处理一点
+}
+class MEM extends Bundle {
+    val mem_write = Bool()
+    val mem_read = Bool() // need it for load-use hazard detection
+}
+class WB extends Bundle {
+    val wb_sel = UInt(2.W)
+    val reg_write = Bool()
+}
 class ControlSignals extends Bundle {
     val inst = Input(UInt(32.W))
-    val imm_sel = Output(UInt(3.W))
-    val br_sel = Output(UInt(1.W)) // branch is here? (it needs to be AND-ed with the zero flag of ALU)
-    // val mem_read = Output(Bool()) // you useless thing!
-    // val mem2reg = Output(Bool()) // 这个control只控制内存和alu的输出，都没有考虑jal/jalr的情况，不弄你了啦
-    val mem_write = Output(Bool())
-    val a_sel = Output(UInt(2.W))
-    val b_sel = Output(UInt(2.W))
-    val alu_op = Output(UInt(3.W))
-    val pc_sel = Output(UInt(2.W))
-    // val alu_src = Output(Bool())
-    val reg_write = Output(Bool())
-    val wb_sel = Output(UInt(2.W))
+    // val imm_sel = Output(UInt(3.W))
+    // val br_sel = Output(UInt(1.W))
+    // val mem_write = Output(Bool())
+    // val a_sel = Output(UInt(2.W))
+    // val b_sel = Output(UInt(2.W))
+    // val alu_op = Output(UInt(3.W))
+    // val pc_sel = Output(UInt(2.W))
+    // val reg_write = Output(Bool())
+    // val wb_sel = Output(UInt(2.W))
+    val id = Output(new ID)
+    val ex = Output(new EX)
+    val mem = Output(new MEM)
+    val wb = Output(new WB)
 }
 
 class Control extends Module {
     import Control._
     val io = IO (new ControlSignals)
     val pc_sel :: imm_sel :: alu_op :: a_sel :: b_sel :: br_sel :: store_sel :: load_sel :: wb_sel :: wen :: Nil = ListLookup(io.inst, default, table)
-    io.br_sel := br_sel
-    io.imm_sel := imm_sel
-    // io.mem_read := load_sel =/= LD_XXX
-    io.mem_write := store_sel =/= ST_XXX
-    io.alu_op := alu_op
-    io.reg_write := wen
-    io.pc_sel := pc_sel
-    io.a_sel := a_sel
-    io.b_sel := b_sel
-    io.wb_sel := wb_sel
+    io.id.imm_sel := imm_sel
+
+    io.ex.alu_op := alu_op
+    io.ex.a_sel := a_sel
+    io.ex.b_sel := b_sel
+    io.ex.br_sel := br_sel
+    io.ex.pc_sel := pc_sel
+
+    io.mem.mem_write := store_sel =/= ST_XXX
+    io.mem.mem_read := load_sel =/= LD_XXX
+
+    io.wb.wb_sel := wb_sel
+    io.wb.reg_write := wen
 }
