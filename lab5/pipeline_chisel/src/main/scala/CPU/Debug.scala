@@ -15,6 +15,25 @@ class DebugBus extends Bundle {
     val rf_data = Output(UInt(32.W))
     val mem_data = Output(UInt(32.W))
     val pc = Output(UInt(32.W))
+    val pc_in = Output(UInt(32.W))
+    val pcd = Output(UInt(32.W))
+    val pce = Output(UInt(32.W))
+    val ir = Output(UInt(32.W))
+    val imm = Output(UInt(32.W))
+    val mdr = Output(UInt(32.W))
+    val a = Output(UInt(32.W))
+    val b = Output(UInt(32.W))
+    val y = Output(UInt(32.W))
+    val bm = Output(UInt(32.W))
+    val yw = Output(UInt(32.W))
+    val rd = Output(UInt(5.W))
+    val rdm = Output(UInt(5.W))
+    val rdw = Output(UInt(5.W))
+    val ctrl = Output(UInt(32.W))
+    val ctrlm = Output(UInt(32.W))
+    val ctrlw = Output(UInt(32.W))
+    val stall = Output(Bool())
+    val flush = Output(Bool())
 }
 
 // module cpu (
@@ -52,6 +71,8 @@ class DebugBus extends Bundle {
 // input [31:0] pc
 // );
 
+
+
 // 这几个东西感觉可以打包一下（
 // //输入sw的端口
 // input valid,
@@ -70,7 +91,12 @@ class SegDisIO extends Bundle {
     val seg = Input(UInt(8.W))
     val sw = Output(UInt(5.W))
 }
-
+// 增加流水线寄存器调试接口
+// input [31:0] pcin, pc, pcd, pce,
+// input [31:0] ir, imm, mdr,
+// input [31:0] a, b, y, bm, yw,
+// input [4:0]  rd, rdm, rdw,
+// input [31:0] ctrl, ctrlm, ctrlw
 class PDUIO extends Bundle {
     val io_bus = Flipped(new IOBus)
     val debug_bus = Flipped (new DebugBus)
